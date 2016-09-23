@@ -7,7 +7,6 @@ use yii\widgets\DetailView;
 /* @var $model app\models\YiiUser */
 
 $this->title = "用户中心";
-$this->params['breadcrumbs'][] = ['label' => 'Yii Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="yii-user-view">
@@ -20,11 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= DetailView::widget([
         'model' => $model,
+        
         'attributes' => [
             'user_id',
             'user_name',
             'user_password',
-            'user_identityid',
+            'userIdentity.identity_name',
+            'user1Detail.some_info'
         ],
     ]) ?>
 

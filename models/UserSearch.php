@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\YiiUser;
+use app\models\YUser;
 
 /**
  * YiiIUserSearch represents the model behind the search form about `app\models\YiiUser`.
  */
-class YiiIUserSearch extends YiiUser
+class UserSearch extends User
 {
     /**
      * @inheritdoc
@@ -48,7 +48,7 @@ class YiiIUserSearch extends YiiUser
      */
     public function search($params)
     {
-        $query = YiiUser::find();
+        $query = User::find();
         $query->joinWith(['userIdentity' => function($query){ $query->from(['userIdentity' => 'yii_identity']);}]);//userIdentity为方法名
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
