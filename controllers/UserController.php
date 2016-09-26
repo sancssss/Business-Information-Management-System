@@ -5,7 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\User1Details;
+use app\models\User2Details;
 use app\models\SignupForm;
+use app\models\SpecialSignupForm;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -58,6 +60,14 @@ class UserController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    
+    
+    public function actionSpecialPersonalCenter($id)
+    {
+        return $this->render('special_personal_center', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new YiiUser model.
@@ -87,6 +97,34 @@ class UserController extends Controller
         }
     }
     
+    /**
+     * 
+     * 特殊用户注册
+     * @return view
+     */
+     public function actionSpecialSignup()
+    {
+       $user = new User();
+       $userInfo = new User2Details();
+       $form = new SpecialSignupForm();
+       //数据存在form模型中并且验证
+       if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $user->user_name = $form->user_name;
+            $user->user_password = $form->user_password;
+            $user->user_identityid = 4;
+            $user->save();
+            $userInfo->userid = $user->user_id;//in user2_details , 'userid'
+            Yii::trace($message)
+            $userInfo->some_info = $form->some_info;
+            $userInfo->save();
+            return $this->redirect(['special-personal-center', 'id' => $userInfo->userid]);
+        } else {
+            return $this->render('special_signup', [
+                'model' => $form,
+            ]);
+        }
+    }
+    
     public function addUser($userId){
         $user = User::findOne($userId);
         $userInfo = User1Details::findOne(userId);
@@ -109,14 +147,6 @@ class UserController extends Controller
             'user' => $user,
             'userInfo' => $profile,
         ]);
-    }
-    /**
-     * Creates a new SpecialYiiUser model
-     * If creation is successful, the browser will be redirected to the 'special_personal_center' page.
-     * @return mixed
-     */
-    public function actionSpecialSignup(){
-        
     }
 
     /**

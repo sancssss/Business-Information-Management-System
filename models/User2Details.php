@@ -5,22 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "yii_user1_details".
+ * This is the model class for table "yii_user2_details".
  *
  * @property integer $id
- * @property integer $user_id
+ * @property integer $userid
  * @property string $some_info
  *
  * @property YiiUser $user
  */
-class User1Details extends \yii\db\ActiveRecord
+class User2Details extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'yii_user1_details';
+        return 'yii_user2_details';
     }
 
     /**
@@ -29,10 +29,10 @@ class User1Details extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
-            [['user_id'], 'integer'],
+            [['userid'], 'required'],
+            [['userid'], 'integer'],
             [['some_info'], 'string'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'user_id']],
+            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userid' => 'user_id']],
         ];
     }
 
@@ -43,7 +43,7 @@ class User1Details extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
+            'userid' => 'Userid',
             'some_info' => 'Some Info',
         ];
     }
@@ -53,6 +53,6 @@ class User1Details extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+        return $this->hasOne(User::className(), ['user_id' => 'userid']);
     }
 }
