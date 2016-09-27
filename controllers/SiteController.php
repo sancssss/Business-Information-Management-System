@@ -55,24 +55,22 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Login action.
      *
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
-    public function actionLogin()
-    {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            $identity = Yii::$app->user->identity;
+            $id = $identity->user_id;
+            $user_identityid = $identity->user_identityid;
+            if($user_identityid == 1){
+                return $this->redirect(['user/personal-center', 'id' => $id]);
+            }else{
+                return $this->redirect(['user/special-personal-center', 'id' => $id]);
+            }
+                
         }
 
         $model = new LoginForm();

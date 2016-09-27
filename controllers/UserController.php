@@ -83,7 +83,7 @@ class UserController extends Controller
        //数据存在form模型中并且验证
        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $user->user_name = $form->user_name;
-            $user->user_password = $form->user_password;
+            $user->user_password = md5($form->user_password);
             $user->user_identityid = 1;
             $user->save();
             $userInfo->user_id = $user->user_id;
@@ -110,11 +110,10 @@ class UserController extends Controller
        //数据存在form模型中并且验证
        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $user->user_name = $form->user_name;
-            $user->user_password = $form->user_password;
+            $user->user_password = md5($form->user_password);
             $user->user_identityid = 4;
             $user->save();
             $userInfo->userid = $user->user_id;//in user2_details , 'userid'
-            Yii::trace($message)
             $userInfo->some_info = $form->some_info;
             $userInfo->save();
             return $this->redirect(['special-personal-center', 'id' => $userInfo->userid]);
@@ -125,29 +124,6 @@ class UserController extends Controller
         }
     }
     
-    public function addUser($userId){
-        $user = User::findOne($userId);
-        $userInfo = User1Details::findOne(userId);
-        
-        if(!isset($user, $userInfo)){
-            throw new NotFoundHttpException("The user was not found.");
-        }
-        
-        if ($user->load(Yii::$app->request->post()) && $userInfo->load(Yii::$app->request->post())) {
-            $isValid = $user->validate();
-            $isValid = $profile->validate() && $isValid;
-            if ($isValid) {
-                $user->save(false);
-                $profile->save(false);
-                return $this->redirect(['view', 'id' => $userId]);
-            }
-        }
-        
-        return $this->render('signup', [
-            'user' => $user,
-            'userInfo' => $profile,
-        ]);
-    }
 
     /**
      * Updates an existing YiiUser model.

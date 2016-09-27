@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\web\IdentityInterface;
 
 use Yii;
 
@@ -12,12 +13,13 @@ use Yii;
  * @property string $user_password
  * @property integer $user_identityid
  * @property string $some_info
+ * @property String $user_authkey
  *
  * @property YiiIdentity $userIdentity
  * @property YiiUser1Detail $yiiUser1Details
  * @property YiiUser2Detail $yiiUser2Details
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -25,6 +27,58 @@ class User extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'yii_user';
+    }
+    
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->user_authkey = Yii::$app->security->generateRandomString();
+            }
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Finds an identity by the given ID.
+     *
+     * @param string|integer $id the ID to be looked for
+     * @return IdentityInterface|null the identity object that matches the given ID.
+     */
+     public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+    
+    /**
+     * @return int|string 当前用户ID
+     */
+    public function getId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @return string 当前用户的（cookie）认证密钥
+     */
+    public function getAuthKey()
+    {
+        return $this->user_authkey;
+    }
+
+    /**
+     * @param string $authKey
+     * @return boolean if auth key is valid for current user
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
     }
     
     public function scenarios() {
@@ -58,6 +112,12 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+    
+    public function setPassword($password)
+    {
+        $this->user_password = md5($password);
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */
