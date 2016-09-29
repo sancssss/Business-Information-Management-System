@@ -12,6 +12,7 @@ use Yii;
  * @property string $user_name
  * @property string $user_password
  * @property integer $user_identityid
+ * 1代表企业用户,2代表管理用户,3代表未审核用户,4代表超级管理员.
  * @property string $some_info
  * @property String $user_authkey
  *
@@ -21,6 +22,12 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    
+    const ROLE_USER = 1;
+    const ROLE_MANAGER = 2;
+    const ROLE_NOCHECK_USER = 3;
+    const ROLE_ADMIN = 4;
+
     /**
      * @inheritdoc
      */
@@ -34,11 +41,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
                 $this->user_authkey = Yii::$app->security->generateRandomString();
+                $auth = Yii::$app->authManager;
             }
             return true;
         }
         return false;
     }
+    
+    
     /**
      * Finds an identity by the given ID.
      *
@@ -84,6 +94,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function scenarios() {
         return parent::scenarios();
     }
+ 
 
     /**
      * @inheritdoc

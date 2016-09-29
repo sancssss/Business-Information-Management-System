@@ -53,6 +53,12 @@ class SiteController extends Controller
             ],
         ];
     }
+    
+    
+    public function actionLogin()
+    {
+        return $this->redirect(['site/index']);
+    }
 
     /**
      * Login action.

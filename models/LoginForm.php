@@ -29,7 +29,8 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['user_id', 'user_password'], 'required', 'message'=> '此项不能为空'],
+            ['user_id', 'required', 'message'=> '用户ID不能为空'],
+            ['user_password', 'required', 'message'=> '用户密码不能为空'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
         ];
@@ -63,6 +64,7 @@ class LoginForm extends Model
         return [
             'user_id' => '用户ID',
             'user_password' => '密码',
+            'rememberMe' => '保持登录'
         ];
     }
     
