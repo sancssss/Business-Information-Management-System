@@ -122,7 +122,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'user_name' => '用户名',
             'user_password' => '密码',
             'user_identityid' => '用户身份',
-            'confirmLink' => '确认身份'
+            'confirmLink' => '确认身份',
+            'userDetailLink' => '详细信息'
         ];
     }
 
@@ -132,6 +133,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->user_password = md5($password);
     }
     
+    /**
+     * 返回每个未认证企业用户的认证确认连接
+     * @return Html 
+     */
     public function getConfirmLink()
     {
         if($this->user_identityid == User::ROLE_USER){
@@ -140,6 +145,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $url = Url::to(['/manager/confirm-user', 'uid' => $this->user_id]);
         $options =  ['class'=>'label label-primary'];
         return Html::a('确认', $url, $options);
+    }
+    /**
+     * 返回每个用户的详细资料链接
+     * @return Html
+     */
+    public function getUserDetailLink()
+    {
+        $url = Url::to(['/manager/user-detail', 'uid' => $this->user_id]);
+        $options =  [];
+        return Html::a($this->user_name, $url, $options);
     }
     
     /**

@@ -23,7 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'user_id',
             //'twork_content',
-            'user_name',
+            [
+               'attribute'=>'userDetailLink', 'format'=>'raw' 
+            ],
             [
                'attribute'=>'confirmLink', 'format'=>'raw' 
             ],

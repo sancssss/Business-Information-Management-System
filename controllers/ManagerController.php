@@ -18,13 +18,13 @@ class ManagerController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'admin'],
+                'only' => ['index', 'nochecked-user-list', 'user-list', 'confirm-user'],
                 //非登陆用户无法进入个人中心
                 'rules' => [
                      [
                         'allow' => 'true',
-                        'actions' => ['index'],
-                        'roles' => ['manager_user','nochecked_manager_user'],
+                        'actions' => ['index' ,'nochecked-user-list', 'user-list', 'confirm-user'],
+                        'roles' => ['manager_user'],
                     ],
                 ]
             ],
@@ -99,6 +99,15 @@ class ManagerController extends \yii\web\Controller
         return $this->redirect(['manager/user-list']);
     }
     
+    public function actionUserDetail($uid)
+    {
+        $user = User::find()->where(['user_id' => $uid, 'user_identityid' => [User::ROLE_USER, User::ROLE_NOCHECK_USER]])->one();
+         return $this->render('user_detail', [
+            'model' => $user,
+        ]);
+    }
+
+
     protected function verifiedItem($uid)
     {
         $model = User::findOne($uid);
