@@ -42,9 +42,8 @@ class User1Details extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'user_id' => 'User ID',
-            'some_info' => 'Some Info',
+            'some_info' => '其他信息',
         ];
     }
 

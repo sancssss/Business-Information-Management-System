@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\YiiUser */
 
-$this->title = '企业注册';
+$this->title = '管理注册';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="yii-user-create">

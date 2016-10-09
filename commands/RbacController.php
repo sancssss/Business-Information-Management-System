@@ -18,7 +18,7 @@ class RbacController extends Controller
         /**
          * Roles
          */
-
+/*
         // create and add "user" role
         $user = $auth->createRole('checked_user');
         $auth->add($user);
@@ -38,7 +38,11 @@ class RbacController extends Controller
          * Mutual connections
          */
 
-        $auth->addChild($admin, $manager);
-        $auth->addChild($admin, $user);
+        //$auth->addChild($admin, $manager);
+        //$auth->addChild($admin, $user);
+        $user = $auth->createRole('nochecked_manager_user');
+        $auth->add($user);
+        $auth->addChild($auth->getRole('admin_user'), $user);
+        
     }
 }

@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'user_confirm_password')->passwordInput(['maxlength' => true])?>
     <?= $form->field($model, 'some_info')->textarea()?>
     <div class="form-group">
-        <?= Html::submitButton('注册', ['signup-details'],  ['class' =>  'btn btn-success']) ?>
+        <?= Html::submitButton('注册',  ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -6,6 +6,11 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\admin\admin',
+        ],
+    ],
     'components' => [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',

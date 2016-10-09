@@ -12,7 +12,7 @@ use Yii;
  * @property string $user_name
  * @property string $user_password
  * @property integer $user_identityid
- * 1代表企业用户,2代表管理用户,3代表未审核用户,4代表超级管理员.
+ * 1代表企业用户,2代表管理用户,3代表未审核用户,4代表未审核管理,5代表超级管理员.
  * @property string $some_info
  * @property String $user_authkey
  *
@@ -26,7 +26,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const ROLE_USER = 1;
     const ROLE_MANAGER = 2;
     const ROLE_NOCHECK_USER = 3;
-    const ROLE_ADMIN = 4;
+    const ROLE_NOCHECK_MANAGER = 4;
+    const ROLE_ADMIN = 5;
 
     /**
      * @inheritdoc
@@ -41,7 +42,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
                 $this->user_authkey = Yii::$app->security->generateRandomString();
-                $auth = Yii::$app->authManager;
             }
             return true;
         }
@@ -106,7 +106,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['user_identityid'], 'integer'],
             [['user_name'], 'string', 'max' => 255],
             [['user_password'], 'string', 'max' => 32],
-            [['user_identityid'], 'exist', 'skipOnError' => true, 'targetClass' => YiiIdentity::className(), 'targetAttribute' => ['user_identityid' => 'identity_id']],
+            [['user_identityid'], 'exist', 'skipOnError' => true, 'targetClass' => Identity::className(), 'targetAttribute' => ['user_identityid' => 'identity_id']],
         ];
     }
 
@@ -134,7 +134,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUserIdentity()
     {
-        return $this->hasOne(YiiIdentity::className(), ['identity_id' => 'user_identityid']);
+        return $this->hasOne(Identity::className(), ['identity_id' => 'user_identityid']);
     }
 
     /**
