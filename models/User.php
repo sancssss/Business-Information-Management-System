@@ -1,8 +1,10 @@
 <?php
 
 namespace app\models;
-use yii\web\IdentityInterface;
 
+use yii\web\IdentityInterface;
+use yii\helpers\Url;
+use yii\helpers\Html;
 use Yii;
 
 /**
@@ -120,6 +122,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'user_name' => '用户名',
             'user_password' => '密码',
             'user_identityid' => '用户身份',
+            'confirmLink' => '确认身份'
         ];
     }
 
@@ -128,6 +131,33 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->user_password = md5($password);
     }
+    
+    public function getConfirmLink()
+    {
+        if($this->user_identityid == User::ROLE_USER){
+             return Html::tag('a','已认证');
+        }
+        $url = Url::to(['/manager/confirm-user', 'uid' => $this->user_id]);
+        $options =  ['class'=>'label label-primary'];
+        return Html::a('确认', $url, $options);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthAssignments()
+    {
+        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemNames()
+    {
+        return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('auth_assignment', ['user_id' => 'user_id']);
+    }
+
     
     /**
      * @return \yii\db\ActiveQuery

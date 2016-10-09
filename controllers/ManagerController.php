@@ -3,6 +3,8 @@
 namespace app\controllers;
 use yii\filters\AccessControl;
 use app\models\User;
+use \yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use Yii;
 
 class ManagerController extends \yii\web\Controller
@@ -39,20 +41,80 @@ class ManagerController extends \yii\web\Controller
         ]);
     }
     /**
-     * 显示用户列表.
+     * 显示全部用户列表.
      * @return mixed
      */
     public function actionUserList()
     {
-        
+        $query = User::find()->where(['user_identityid' => [User::ROLE_NOCHECK_USER, User::ROLE_USER]]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+         return $this->render('user_list', [
+            //'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
+    
+    /**
+     * 显示未审核用户列表.
+     * @return mixed
+     */
+    public function actionNocheckedUserList()
+    {
+        $selectionData = Yii::$app->request->post('selection');
+        if($selectionData != NULL)
+        {
+            //Yii::trace($selectionData);
+            //Yii::trace(sizeof($selectionData));
+            //Yii::trace($selectionData[0]);
+            for($i = 0; $i < sizeof($selectionData); $i++){
+                Yii::trace($selectionData[$i]);
+                $this->verifiedItem($selectionData[$i]);
+            }
+        }
+        $query = User::find()->where(['user_identityid' => [User::ROLE_NOCHECK_USER]]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+         return $this->render('nochecked_user_list', [
+            //'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
     /**
      * 确认某个用户为认证用户.
      * @return boolean 
      */
-    public function confirmUser($uid)
+    public function actionConfirmUser($uid)
     {
-        
+        $this->verifiedItem($uid);
+        return $this->redirect(['manager/user-list']);
+    }
+    
+    protected function verifiedItem($uid)
+    {
+        $model = User::findOne($uid);
+        if($model->user_identityid == User::ROLE_NOCHECK_USER){
+            $model->user_identityid = User::ROLE_USER;
+            if($model->save()){
+                $auth = Yii::$app->authManager;
+                $userRole = $auth->getRole('nochecked_user');
+                //先取消原有角色
+                $auth->revoke($userRole, $uid);
+                $userNewRole = $auth->getRole('checked_user');
+                $auth->assign($userNewRole, $uid);
+            }else{
+               //TODO 
+            }
+        }
     }
 
      /**

@@ -6,12 +6,12 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\YiiUser */
 
-    $this->title = "特殊用户中心";
+    $this->title = "管理员中心";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="yii-user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('我的资料') ?></h1>
 
     <p>
         
@@ -23,10 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'user_id',
             'user_name',
-            'user_password',
             'userIdentity.identity_name',
             'user2Detail.some_info'
         ],
     ]) ?>
-
+<?=Html::a('查看全部企业', ['/manager/user-list'], ['class'=>'btn btn-primary'])?> 
+<?=Html::a('查看未审核企业', ['/manager/nochecked-user-list'], ['class'=>'btn btn-primary'])?>
 </div>
