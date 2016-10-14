@@ -66,7 +66,7 @@ class SiteController extends Controller
     }
     
     /**
-     * 普通用户注册
+     * 企业用户注册
      * If creation is successful, the browser will be redirected to the 'personal_center' page.
      * @return mixed
      */
@@ -99,8 +99,7 @@ class SiteController extends Controller
     }
     
     /**
-     * 
-     * 特殊用户注册
+     *管理员用户注册
      * @return view
      */
      public function actionSpecialSignup()
@@ -131,8 +130,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
+     * 首页默认进入登录页面
      * @return string
      */
     public function actionIndex()
