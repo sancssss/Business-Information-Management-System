@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2016-10-14 16:26:18
+Date: 2016-10-17 15:06:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -307,34 +307,38 @@ CREATE TABLE `yii_admin_user_details` (
 -- ----------------------------
 DROP TABLE IF EXISTS `yii_company`;
 CREATE TABLE `yii_company` (
-  `company_id` int(20) NOT NULL,
-  `user_id` int(20) NOT NULL,
-  `company_name` varchar(50) NOT NULL,
-  `company_credit_code` varchar(20) DEFAULT NULL,
-  `company_charater` varchar(20) DEFAULT NULL,
-  `company_registered_capital` varchar(20) DEFAULT NULL,
-  `company_established_time` varchar(20) DEFAULT NULL,
-  `company_region_id` int(6) DEFAULT NULL,
-  `company_re_province` varchar(20) DEFAULT NULL,
-  `company_reg_city` varchar(20) DEFAULT NULL,
-  `company_reg_county` varchar(20) DEFAULT NULL,
-  `company_reg_address` varchar(50) DEFAULT NULL,
-  `company_reg_longitude` decimal(10,0) DEFAULT NULL,
-  `company_reg_latitude` decimal(10,0) DEFAULT NULL,
-  `company_prod_province` varchar(20) DEFAULT NULL,
-  `company_prod_city` varchar(20) DEFAULT NULL,
-  `company_prod_county` varchar(20) DEFAULT NULL,
-  `company_prod_address` varchar(50) DEFAULT NULL,
-  `company_prod_longitude` decimal(10,0) DEFAULT NULL,
-  `company_prod_latitude` decimal(10,0) DEFAULT NULL,
-  `company_doctor_num` int(11) DEFAULT NULL,
-  `company_master_num` int(11) DEFAULT NULL,
-  `company_undergraduate_num` int(11) DEFAULT NULL,
-  `company_juniorcollege_num` int(11) DEFAULT NULL,
-  `company_staff_num` int(11) DEFAULT NULL,
-  `verified` tinyint(4) DEFAULT NULL,
-  `company_comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`company_id`)
+  `company_id` int(20) NOT NULL COMMENT '企业编号',
+  `user_id` int(20) NOT NULL COMMENT '用户编号',
+  `company_name` varchar(50) NOT NULL COMMENT '企业名称',
+  `company_credit_code` varchar(20) DEFAULT NULL COMMENT '社会信用代码',
+  `company_charater` varchar(20) DEFAULT NULL COMMENT '注册性质',
+  `company_registered_capital` varchar(20) DEFAULT NULL COMMENT '注册资本',
+  `company_established_time` varchar(20) DEFAULT NULL COMMENT '成立时间',
+  `company_region_id` int(6) DEFAULT NULL COMMENT '行政代码',
+  `company_re_province` varchar(20) DEFAULT NULL COMMENT '注册省市',
+  `company_reg_city` varchar(20) DEFAULT NULL COMMENT '注册地市',
+  `company_reg_county` varchar(20) DEFAULT NULL COMMENT '注册县市',
+  `company_reg_address` varchar(50) DEFAULT NULL COMMENT '注册地址',
+  `company_reg_longitude` decimal(10,0) DEFAULT NULL COMMENT '注册经度',
+  `company_reg_latitude` decimal(10,0) DEFAULT NULL COMMENT '注册纬度',
+  `company_prod_province` varchar(20) DEFAULT NULL COMMENT '生产省市',
+  `company_prod_city` varchar(20) DEFAULT NULL COMMENT '生产地市',
+  `company_prod_county` varchar(20) DEFAULT NULL COMMENT '生产县市',
+  `company_prod_address` varchar(50) DEFAULT NULL COMMENT '生产地址',
+  `company_prod_longitude` decimal(10,0) DEFAULT NULL COMMENT '生产经度',
+  `company_prod_latitude` decimal(10,0) DEFAULT NULL COMMENT '生产纬度',
+  `company_doctor_num` int(11) DEFAULT NULL COMMENT '博士学历人数',
+  `company_master_num` int(11) DEFAULT NULL COMMENT '硕士学历人数',
+  `company_bachelor_num` int(11) DEFAULT NULL COMMENT '本科学历人数',
+  `company_juniorcollege_num` int(11) DEFAULT NULL COMMENT '大专学历人数',
+  `company_staff_num` int(11) DEFAULT NULL COMMENT '职工学历人数',
+  `verified` tinyint(4) DEFAULT NULL COMMENT '审核状态',
+  `company_comment` varchar(200) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`company_id`),
+  KEY `user_id` (`user_id`),
+  KEY `yii_company_ibfk_1` (`company_region_id`),
+  CONSTRAINT `yii_company_ibfk_1` FOREIGN KEY (`company_region_id`) REFERENCES `yii_company_user_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `yii_company_ibfk_2` FOREIGN KEY (`company_region_id`) REFERENCES `administrative_region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -342,38 +346,23 @@ CREATE TABLE `yii_company` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `yii_company_image`
--- ----------------------------
-DROP TABLE IF EXISTS `yii_company_image`;
-CREATE TABLE `yii_company_image` (
-  `company_id` int(20) NOT NULL,
-  `image_type` varchar(20) DEFAULT NULL,
-  `image_id` int(11) DEFAULT NULL,
-  `image_comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of yii_company_image
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `yii_company_manager`
 -- ----------------------------
 DROP TABLE IF EXISTS `yii_company_manager`;
 CREATE TABLE `yii_company_manager` (
-  `company_id` int(20) NOT NULL DEFAULT '0',
-  `manager_type` varchar(20) DEFAULT NULL,
-  `manager_sex` tinyint(1) DEFAULT NULL,
-  `manager_idnumber` int(18) DEFAULT NULL,
-  `manager_mobilephone` int(18) DEFAULT NULL,
-  `manager_telephone` int(18) DEFAULT NULL,
-  `manager_fax` int(18) DEFAULT NULL,
-  `manager_email` varchar(20) DEFAULT NULL,
-  `manager_address` varchar(50) DEFAULT NULL,
-  `manager_zip_code` varchar(10) DEFAULT NULL,
-  `manager_comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`company_id`)
+  `company_id` int(20) NOT NULL COMMENT '企业编号',
+  `manager_type` varchar(20) DEFAULT NULL COMMENT '负责人类型',
+  `manager_sex` tinyint(1) DEFAULT NULL COMMENT '负责人性别',
+  `manager_idnumber` int(18) DEFAULT NULL COMMENT '身份证号码',
+  `manager_mobilephone` int(18) DEFAULT NULL COMMENT '联系手机',
+  `manager_telephone` int(18) DEFAULT NULL COMMENT '联系电话',
+  `manager_fax` int(18) DEFAULT NULL COMMENT '联系传真',
+  `manager_email` varchar(20) DEFAULT NULL COMMENT '联系邮箱',
+  `manager_address` varchar(50) DEFAULT NULL COMMENT '联系地址',
+  `manager_zip_code` varchar(10) DEFAULT NULL COMMENT '联系邮编',
+  `manager_comment` varchar(200) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`company_id`),
+  CONSTRAINT `yii_company_manager_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `yii_company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -406,8 +395,8 @@ DROP TABLE IF EXISTS `yii_file`;
 CREATE TABLE `yii_file` (
   `file_id` int(11) NOT NULL DEFAULT '0',
   `file_name` varchar(50) DEFAULT NULL,
-  `file_format` varchar(10) DEFAULT NULL,
-  `file_address` varchar(50) DEFAULT NULL,
+  `file_extension` varchar(10) DEFAULT NULL,
+  `file_path` varchar(50) DEFAULT NULL,
   `file_comment` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`file_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -438,6 +427,26 @@ INSERT INTO `yii_identity` VALUES ('6', '未审核市级管理员');
 INSERT INTO `yii_identity` VALUES ('7', '省级管理员');
 INSERT INTO `yii_identity` VALUES ('8', '未审核省级管理员');
 INSERT INTO `yii_identity` VALUES ('9', '系统管理员');
+
+-- ----------------------------
+-- Table structure for `yii_image_file`
+-- ----------------------------
+DROP TABLE IF EXISTS `yii_image_file`;
+CREATE TABLE `yii_image_file` (
+  `company_id` int(12) NOT NULL,
+  `image_type` varchar(20) DEFAULT NULL,
+  `display_order` tinyint(1) DEFAULT NULL,
+  `file_id` int(11) NOT NULL,
+  `image_comment` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`company_id`),
+  KEY `file_id` (`file_id`),
+  CONSTRAINT `yii_image_file_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `yii_company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `yii_image_file_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `yii_file` (`file_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yii_image_file
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yii_message_verification`
@@ -532,13 +541,17 @@ INSERT INTO `yii_user2_details` VALUES ('2', '10002', '管理员一的用户');
 DROP TABLE IF EXISTS `yii_verified_company`;
 CREATE TABLE `yii_verified_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_id` int(20) DEFAULT NULL,
-  `verified_user_id` int(20) DEFAULT NULL,
-  `verified_status` int(11) DEFAULT NULL,
+  `company_id` int(20) NOT NULL,
+  `verified_user_id` int(20) NOT NULL,
+  `verified_status` int(11) NOT NULL,
   `verified_time` int(12) DEFAULT NULL,
   `verified_information` varchar(200) DEFAULT NULL,
   `verified_comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `company_id` (`company_id`),
+  KEY `verified_user_id` (`verified_user_id`),
+  CONSTRAINT `yii_verified_company_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `yii_company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `yii_verified_company_ibfk_2` FOREIGN KEY (`verified_user_id`) REFERENCES `yii_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -551,12 +564,16 @@ CREATE TABLE `yii_verified_company` (
 DROP TABLE IF EXISTS `yii_verified_manager`;
 CREATE TABLE `yii_verified_manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin_user_id` int(20) DEFAULT NULL,
-  `verified_user_id` int(20) DEFAULT NULL,
-  `verified_status` int(11) DEFAULT NULL,
+  `admin_user_id` int(20) NOT NULL,
+  `verified_user_id` int(20) NOT NULL,
+  `verified_status` int(11) NOT NULL,
   `verified_information` varchar(200) DEFAULT NULL,
   `verified_comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `admin_user_id` (`admin_user_id`),
+  KEY `verified_user_id` (`verified_user_id`),
+  CONSTRAINT `yii_verified_manager_ibfk_1` FOREIGN KEY (`admin_user_id`) REFERENCES `yii_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `yii_verified_manager_ibfk_2` FOREIGN KEY (`verified_user_id`) REFERENCES `yii_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

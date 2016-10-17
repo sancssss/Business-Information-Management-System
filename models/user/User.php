@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\user;
 
 use yii\web\IdentityInterface;
 use yii\helpers\Url;
@@ -25,11 +25,15 @@ use Yii;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     
-    const ROLE_USER = 1;
-    const ROLE_MANAGER = 2;
-    const ROLE_NOCHECK_USER = 3;
-    const ROLE_NOCHECK_MANAGER = 4;
-    const ROLE_ADMIN = 5;
+    const COMPANY = 1;
+    const NOTCHECK_COMPANY = 2;
+    const COUNTY_ADMIN = 3;
+    const NOTCHECK_COUNTY_ADMIN = 4;
+    const CITY_ADMIN = 5;
+    const NOTCHECK_CITY_ADMIN = 6;
+    const PROVINCE_ADMIN = 7;
+    const NOTCHECK_PROVINCE_ADMIN = 8;
+    const SYSTEM_ADMIN = 9;
 
     /**
      * @inheritdoc
@@ -107,6 +111,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['user_name', 'user_password', 'user_identityid'], 'required'],
             [['user_identityid'], 'integer'],
             [['user_name'], 'string', 'max' => 255],
+            [['user_name'], 'unique'],
             [['user_password'], 'string', 'max' => 32],
             [['user_identityid'], 'exist', 'skipOnError' => true, 'targetClass' => Identity::className(), 'targetAttribute' => ['user_identityid' => 'identity_id']],
         ];
@@ -122,8 +127,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'user_name' => '用户名',
             'user_password' => '密码',
             'user_identityid' => '用户身份',
-            'confirmLink' => '确认身份',
-            'userDetailLink' => '详细信息'
         ];
     }
 
@@ -133,29 +136,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->user_password = md5($password);
     }
     
-    /**
-     * 返回每个未认证企业用户的认证确认连接
-     * @return Html 
-     */
-    public function getConfirmLink()
-    {
-        if($this->user_identityid == User::ROLE_USER){
-             return Html::tag('a','已认证');
-        }
-        $url = Url::to(['/manager/confirm-user', 'uid' => $this->user_id]);
-        $options =  ['class'=>'label label-primary'];
-        return Html::a('确认', $url, $options);
-    }
-    /**
-     * 返回每个用户的详细资料链接
-     * @return Html
-     */
-    public function getUserDetailLink()
-    {
-        $url = Url::to(['/manager/user-detail', 'uid' => $this->user_id]);
-        $options =  [];
-        return Html::a($this->user_name, $url, $options);
-    }
     
     /**
      * @return \yii\db\ActiveQuery
@@ -173,13 +153,28 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('auth_assignment', ['user_id' => 'user_id']);
     }
 
-    
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getUserIdentity()
     {
         return $this->hasOne(Identity::className(), ['identity_id' => 'user_identityid']);
+    }
+    
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getYiiAdminUserDetails()
+    {
+        return $this->hasOne(YiiAdminUserDetails::className(), ['user_id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getYiiCompanyUserDetails()
+    {
+        return $this->hasOne(YiiCompanyUserDetails::className(), ['user_id' => 'user_id']);
     }
 
     /**
