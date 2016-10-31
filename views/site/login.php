@@ -22,7 +22,7 @@ $this->title = '登录';
         ],
     ]); ?>
 
-        <?= $form->field($model, 'user_id')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'user_name')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'user_password')->passwordInput() ?>
 
@@ -33,8 +33,8 @@ $this->title = '登录';
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
                 <?= Html::submitButton('登录', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                    <?= Html::a('企业注册', ['/site/signup'], ['class'=>'btn btn-success'])?>
-    <?=Html::a('管理注册', ['/site/special-signup'], ['class'=>'btn btn-success'])?>
+                <?= Html::a('企业注册', ['/site/signup-company-user'], ['class'=>'btn btn-success'])?>
+                <?=Html::a('管理注册', ['/site/signup-admin-user'], ['class'=>'btn btn-success'])?>
             </div>
         </div>
 

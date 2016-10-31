@@ -6,6 +6,7 @@ use yii\web\IdentityInterface;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use Yii;
+use app\models\index\Identity;
 
 /**
  * This is the model class for table "yii_user".
@@ -164,32 +165,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         /**
      * @return \yii\db\ActiveQuery
      */
-    public function getYiiAdminUserDetails()
+    public function getAdminUserDetails()
     {
-        return $this->hasOne(YiiAdminUserDetails::className(), ['user_id' => 'user_id']);
+        return $this->hasOne(AdminUserDetails::className(), ['user_id' => 'user_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getYiiCompanyUserDetails()
+    public function getCompanyUserDetails()
     {
-        return $this->hasOne(YiiCompanyUserDetails::className(), ['user_id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser1Detail()
-    {
-        return $this->hasOne(User1Details::className(), ['user_id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser2Detail()
-    {
-        return $this->hasOne(User2Details::className(), ['userid' => 'user_id']);
+        return $this->hasOne(CompanyUserDetails::className(), ['user_id' => 'user_id']);
     }
 }

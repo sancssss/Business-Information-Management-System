@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\user\User;
 /**
  * This is the model class for table "yii_user2_details".
  *

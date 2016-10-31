@@ -3,6 +3,7 @@
 namespace app\models\user;
 
 use Yii;
+use app\models\index\AdministrativeRegion;
 
 /**
  * This is the model class for table "yii_admin_user_details".
@@ -40,10 +41,10 @@ class AdminUserDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'user_nickname', 'user_sex', 'user_birthday', 'user_id_number', 'user_address', 'user_type', 'region_id'], 'required'],
+            [['user_id', 'user_nickname', 'user_birthday', 'user_id_number', 'user_address', 'user_type', 'region_id'], 'required'],
             [['user_id', 'region_id'], 'integer'],
-            [['user_nickname', 'user_phone_number', 'user_legal_person', 'user_type'], 'string', 'max' => 20],
-            [['user_sex', 'user_zip_code'], 'string', 'max' => 10],
+            [['user_nickname', 'user_legal_person', 'user_type'], 'string', 'max' => 20],
+           // [['user_sex', 'user_zip_code'], 'string', 'max' => 10],
             [['user_email'], 'string', 'max' => 50],
             [['user_birthday', 'user_comment'], 'string', 'max' => 200],
             [['user_id_number'], 'string', 'max' => 18],

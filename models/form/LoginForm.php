@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\FormModel;
+namespace app\models\form;
 
 use Yii;
 use yii\base\Model;
-use app\models\User;
+use app\models\user\User;
 
 /**
  * LoginForm is the model behind the login form.
@@ -14,7 +14,7 @@ use app\models\User;
  */
 class LoginForm extends Model
 {
-    public $user_id;
+    public $user_name;
     public $user_password;
     public $rememberMe = true;
 
@@ -29,7 +29,7 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            ['user_id', 'required', 'message'=> '用户ID不能为空'],
+            ['user_name', 'required', 'message'=> '用户名不能为空'],
             ['user_password', 'required', 'message'=> '用户密码不能为空'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
@@ -39,7 +39,7 @@ class LoginForm extends Model
     
     public function validatePassword()
     {
-        $model = User::findOne($this->user_id);
+        $model = User::findOne(['user_name' => $this->user_name]);
         if($model != null && ($model->user_password == md5($this->user_password)) ){
             return true;
         }else{
@@ -54,7 +54,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validatePassword()) {
-            $identity = User::findOne($this->user_id);
+            $identity = User::findOne(['user_name' => $this->user_name]);
             return Yii::$app->user->login($identity, $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
@@ -62,7 +62,7 @@ class LoginForm extends Model
 
       public function attributeLabels() {
         return [
-            'user_id' => '用户ID',
+            'user_name' => '用户名',
             'user_password' => '密码',
             'rememberMe' => '保持登录'
         ];

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2016-10-17 15:06:20
+Date: 2016-10-24 14:55:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -197,6 +197,9 @@ INSERT INTO `auth_assignment` VALUES ('manager_user', '10001', '1475214704');
 INSERT INTO `auth_assignment` VALUES ('nochecked_manager_user', '10002', '1475214704');
 INSERT INTO `auth_assignment` VALUES ('nochecked_user', '10000', '1475214223');
 INSERT INTO `auth_assignment` VALUES ('nochecked_user', '10007', '1476079581');
+INSERT INTO `auth_assignment` VALUES ('notcheck_city_admin', '10027', '1477031553');
+INSERT INTO `auth_assignment` VALUES ('notcheck_company', '10023', '1477013521');
+INSERT INTO `auth_assignment` VALUES ('notcheck_company', '10028', '1477033388');
 
 -- ----------------------------
 -- Table structure for `auth_item`
@@ -219,20 +222,20 @@ CREATE TABLE `auth_item` (
 -- ----------------------------
 -- Records of auth_item
 -- ----------------------------
-INSERT INTO `auth_item` VALUES ('admin_user', '0', null, null, null, '1475117253', '1475117253');
-INSERT INTO `auth_item` VALUES ('checked_user', '0', null, null, null, '1475117252', '1475117252');
-INSERT INTO `auth_item` VALUES ('city_admin', '5', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('admin_user', '1', null, null, null, '1475117253', '1475117253');
+INSERT INTO `auth_item` VALUES ('checked_user', '1', null, null, null, '1475117252', '1475117252');
+INSERT INTO `auth_item` VALUES ('city_admin', '1', null, null, null, '1476433265', '1476433265');
 INSERT INTO `auth_item` VALUES ('company', '1', null, null, null, '1476433264', '1476433264');
-INSERT INTO `auth_item` VALUES ('county_admin', '3', null, null, null, '1476433265', '1476433265');
-INSERT INTO `auth_item` VALUES ('manager_user', '0', null, null, null, '1475117253', '1475117253');
-INSERT INTO `auth_item` VALUES ('nochecked_manager_user', '0', null, null, null, '1475213392', '1475213392');
-INSERT INTO `auth_item` VALUES ('nochecked_user', '0', null, null, null, '1475117253', '1475117253');
-INSERT INTO `auth_item` VALUES ('notcheck_city_admin', '6', null, null, null, '1476433265', '1476433265');
-INSERT INTO `auth_item` VALUES ('notcheck_company', '2', null, null, null, '1476433265', '1476433265');
-INSERT INTO `auth_item` VALUES ('notcheck_county_admin', '4', null, null, null, '1476433265', '1476433265');
-INSERT INTO `auth_item` VALUES ('notcheck_province_admin', '8', null, null, null, '1476433265', '1476433265');
-INSERT INTO `auth_item` VALUES ('province_admin', '7', null, null, null, '1476433265', '1476433265');
-INSERT INTO `auth_item` VALUES ('system_admin', '9', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('county_admin', '1', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('manager_user', '1', null, null, null, '1475117253', '1475117253');
+INSERT INTO `auth_item` VALUES ('nochecked_manager_user', '1', null, null, null, '1475213392', '1475213392');
+INSERT INTO `auth_item` VALUES ('nochecked_user', '1', null, null, null, '1475117253', '1475117253');
+INSERT INTO `auth_item` VALUES ('notcheck_city_admin', '1', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('notcheck_company', '1', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('notcheck_county_admin', '1', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('notcheck_province_admin', '1', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('province_admin', '1', null, null, null, '1476433265', '1476433265');
+INSERT INTO `auth_item` VALUES ('system_admin', '1', null, null, null, '1476433265', '1476433265');
 
 -- ----------------------------
 -- Table structure for `auth_item_child`
@@ -250,12 +253,9 @@ CREATE TABLE `auth_item_child` (
 -- ----------------------------
 -- Records of auth_item_child
 -- ----------------------------
-INSERT INTO `auth_item_child` VALUES ('admin_user', 'checked_user');
 INSERT INTO `auth_item_child` VALUES ('province_admin', 'city_admin');
 INSERT INTO `auth_item_child` VALUES ('province_admin', 'company');
 INSERT INTO `auth_item_child` VALUES ('province_admin', 'county_admin');
-INSERT INTO `auth_item_child` VALUES ('admin_user', 'manager_user');
-INSERT INTO `auth_item_child` VALUES ('admin_user', 'nochecked_manager_user');
 INSERT INTO `auth_item_child` VALUES ('system_admin', 'province_admin');
 
 -- ----------------------------
@@ -281,13 +281,13 @@ DROP TABLE IF EXISTS `yii_admin_user_details`;
 CREATE TABLE `yii_admin_user_details` (
   `user_id` int(20) NOT NULL,
   `user_nickname` varchar(20) NOT NULL COMMENT '用户姓名',
-  `user_sex` varchar(10) NOT NULL COMMENT '用户性别',
+  `user_sex` tinytext NOT NULL COMMENT '用户性别',
   `user_phone_number` varchar(20) DEFAULT NULL COMMENT '手机号码',
   `user_email` varchar(50) DEFAULT NULL COMMENT '用户邮箱',
-  `user_birthday` varchar(200) NOT NULL COMMENT '用户生日',
+  `user_birthday` varchar(50) NOT NULL COMMENT '用户生日',
   `user_id_number` varchar(18) NOT NULL COMMENT '身份证号',
-  `user_address` varchar(100) NOT NULL COMMENT '单位地址',
-  `user_zip_code` varchar(10) DEFAULT NULL COMMENT '单位邮编',
+  `user_address` text NOT NULL COMMENT '单位地址',
+  `user_zip_code` int(11) DEFAULT NULL COMMENT '单位邮编',
   `user_legal_person` varchar(20) DEFAULT NULL COMMENT '单位法人',
   `user_comment` varchar(200) DEFAULT NULL COMMENT '备注信息',
   `user_type` varchar(20) NOT NULL COMMENT '用户类型',
@@ -301,6 +301,7 @@ CREATE TABLE `yii_admin_user_details` (
 -- ----------------------------
 -- Records of yii_admin_user_details
 -- ----------------------------
+INSERT INTO `yii_admin_user_details` VALUES ('10027', 'sanca', '男', '13885857805', '131310@gamil.com', '11nian', '121212', 'wewqeqwe', '121321', 'dqwdq', '11111111111cc', 'ddsa', '320000');
 
 -- ----------------------------
 -- Table structure for `yii_company`
@@ -332,18 +333,19 @@ CREATE TABLE `yii_company` (
   `company_bachelor_num` int(11) DEFAULT NULL COMMENT '本科学历人数',
   `company_juniorcollege_num` int(11) DEFAULT NULL COMMENT '大专学历人数',
   `company_staff_num` int(11) DEFAULT NULL COMMENT '职工学历人数',
-  `verified` tinyint(4) DEFAULT NULL COMMENT '审核状态',
+  `verified` tinyint(4) NOT NULL DEFAULT '0' COMMENT '审核状态',
   `company_comment` varchar(200) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`company_id`),
-  KEY `user_id` (`user_id`),
   KEY `yii_company_ibfk_1` (`company_region_id`),
-  CONSTRAINT `yii_company_ibfk_1` FOREIGN KEY (`company_region_id`) REFERENCES `yii_company_user_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `yii_company_ibfk_2` FOREIGN KEY (`company_region_id`) REFERENCES `administrative_region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `yii_company_ibfk_3` (`user_id`),
+  CONSTRAINT `yii_company_ibfk_2` FOREIGN KEY (`company_region_id`) REFERENCES `administrative_region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `yii_company_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `yii_company_user_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yii_company
 -- ----------------------------
+INSERT INTO `yii_company` VALUES ('1', '10028', 'google', '12112121', 'person', '10000000000', '11111', '320105', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
 
 -- ----------------------------
 -- Table structure for `yii_company_manager`
@@ -387,6 +389,9 @@ CREATE TABLE `yii_company_user_details` (
 -- ----------------------------
 -- Records of yii_company_user_details
 -- ----------------------------
+INSERT INTO `yii_company_user_details` VALUES ('10020', 'sanc', '男', '13885867805', '123456', '');
+INSERT INTO `yii_company_user_details` VALUES ('10023', 'sanc', '男', '13885867805', '123456', '');
+INSERT INTO `yii_company_user_details` VALUES ('10028', 'pengliangyu', '男', '13227276565', '171727127@qq.com', 'nihao world');
 
 -- ----------------------------
 -- Table structure for `yii_file`
@@ -440,8 +445,8 @@ CREATE TABLE `yii_image_file` (
   `image_comment` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`company_id`),
   KEY `file_id` (`file_id`),
-  CONSTRAINT `yii_image_file_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `yii_company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `yii_image_file_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `yii_file` (`file_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `yii_image_file_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `yii_file` (`file_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `yii_image_file_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `yii_company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -481,7 +486,7 @@ CREATE TABLE `yii_user` (
   UNIQUE KEY `user_name` (`user_name`),
   KEY `fk_identityid` (`user_identityid`),
   CONSTRAINT `fk_identityid` FOREIGN KEY (`user_identityid`) REFERENCES `yii_identity` (`identity_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10008 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=10029 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of yii_user
@@ -494,6 +499,11 @@ INSERT INTO `yii_user` VALUES ('10004', 'qiyea', 'c4ca4238a0b923820dcc509a6f7584
 INSERT INTO `yii_user` VALUES ('10005', '企业嘻嘻嘻', 'c4ca4238a0b923820dcc509a6f75849b', '1', 'lrwKONjqPs6b1MVK-EdKIhQ2eul77ttl');
 INSERT INTO `yii_user` VALUES ('10006', 'qiyeas', 'c4ca4238a0b923820dcc509a6f75849b', '1', '0veYCBym_0Wl3IiPAGysBTOEBC1-xNl_');
 INSERT INTO `yii_user` VALUES ('10007', 'qwqw', 'c4ca4238a0b923820dcc509a6f75849b', '3', 'eOIykvd9hmrcU865Lc8H0XqBfgdaP9rH');
+INSERT INTO `yii_user` VALUES ('10019', '11111', 'c4ca4238a0b923820dcc509a6f75849b', '1', 'XjlwW6SCv9i4gH6IfKGPFrKqXz4hZbzh');
+INSERT INTO `yii_user` VALUES ('10020', 'test1', 'c4ca4238a0b923820dcc509a6f75849b', '2', 'ubttzne-MyqcGxG3FEBWs3dWR5j2j2I8');
+INSERT INTO `yii_user` VALUES ('10023', '11111111', 'c4ca4238a0b923820dcc509a6f75849b', '2', 'Y_VN2i40sEA0kiY0wQsym2pLgDoc6jeM');
+INSERT INTO `yii_user` VALUES ('10027', 'admin1', 'c4ca4238a0b923820dcc509a6f75849b', '6', 'G1q5fAGtzKV-XR69sYjQ6vKW_s_ckj8Z');
+INSERT INTO `yii_user` VALUES ('10028', 'sancssss', 'c4ca4238a0b923820dcc509a6f75849b', '2', 'lU9ud33fYDSyAmH3BgNQ6icdgT7NQT3c');
 
 -- ----------------------------
 -- Table structure for `yii_user1_details`

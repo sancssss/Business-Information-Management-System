@@ -3,6 +3,7 @@
 namespace app\models\user;
 
 use Yii;
+use app\models\company\Company;
 
 /**
  * This is the model class for table "yii_company_user_details".
@@ -34,7 +35,8 @@ class CompanyUserDetails extends \yii\db\ActiveRecord
         return [
             [['user_id', 'user_nickname'], 'required'],
             [['user_id'], 'integer'],
-            [['user_nickname', 'user_phone_number'], 'string', 'max' => 20],
+            [['user_nickname'], 'string', 'max' => 20],
+            [['user_phone_number'], 'number'],
             [['user_sex'], 'string', 'max' => 10],
             [['user_email'], 'string', 'max' => 50],
             [['user_comment'], 'string', 'max' => 200],
@@ -55,6 +57,14 @@ class CompanyUserDetails extends \yii\db\ActiveRecord
             'user_email' => '用户邮箱',
             'user_comment' => '备注信息',
         ];
+    }
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['user_id' => 'user_id']);
     }
 
     /**

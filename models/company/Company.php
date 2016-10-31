@@ -1,6 +1,9 @@
 <?php
 
 namespace app\models\company;
+use app\models\user\CompanyUserDetails;
+use app\models\file\ImageFile;
+use app\models\verified\VerifiedCompany;
 
 use Yii;
 
@@ -101,23 +104,34 @@ class Company extends \yii\db\ActiveRecord
             'company_staff_num' => '职工学历人数',
             'verified' => '审核状态',
             'company_comment' => '备注信息',
+            'verifyStatus' => '审核状态'
         ];
     }
+    
+    
+    public function getVerifyStatus()
+    {
+        $verifyStatus = '<span class="not-set">未审核</span>';
+        if($this->verified == 1){
+            $verifyStatus = '已审核';
+        }
+        return $verifyStatus;
+    }
 
-    /**
+        /**
      * @return \yii\db\ActiveQuery
      */
     public function getCompanyRegion()
     {
-        return $this->hasOne(CompanyUserDetails::className(), ['user_id' => 'company_region_id']);
+        return $this->hasOne(AdministrativeRegion::className(), ['region_id' => 'company_region_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompanyRegion0()
+    public function getUser()
     {
-        return $this->hasOne(AdministrativeRegion::className(), ['region_id' => 'company_region_id']);
+        return $this->hasOne(CompanyUserDetails::className(), ['user_id' => 'user_id']);
     }
 
     /**
@@ -143,4 +157,5 @@ class Company extends \yii\db\ActiveRecord
     {
         return $this->hasMany(VerifiedCompany::className(), ['company_id' => 'company_id']);
     }
+    
 }
