@@ -27,7 +27,7 @@ class CompanyController extends \yii\web\Controller
     {
         $model = $this->findCManagerModel();
         if($model == null){
-            $this->redirect(['createManager']);
+            $this->redirect(['create-manager']);
         }else{
             return $this->render('company-manager', [
                 'model' => $model,
@@ -40,9 +40,20 @@ class CompanyController extends \yii\web\Controller
      */
     public function actionCreateManager()
     {
+        if($this->findCManagerModel() != null){
+            return $this->redirect (['company-manager']);
+        }          
         $model = new CompanyManager();
-        $form = new CompanyManagerForm();
-        //if($model->load(Yii::$app->request->post()))
+        $model->company_id = $this->findCompanyModel()->company_id;
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            $model->save();
+            return $this->redirect(['company-manager']);
+        }else{
+            //return print_r ($model->getErrors());
+            return $this->render('create-manager',[
+               'model' => $model, 
+            ]);
+        }
     }
     
     /**
@@ -50,7 +61,18 @@ class CompanyController extends \yii\web\Controller
      */
     public function actionUpdateManager()
     {
-        
+        if(($model = $this->findCManagerModel()) == null){
+            return $this->redirect(['create-manager']);
+        }
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            $model->save();
+            return $this->redirect(['company-manager']);
+        }else{
+            //return print_r ($model->getErrors());
+            return $this->render('update-manager',[
+               'model' => $model, 
+            ]);
+        }
     }
     
     

@@ -38,8 +38,9 @@ class CompanyManager extends \yii\db\ActiveRecord
     {
         return [
             [['company_id'], 'required'],
-            [['company_id', 'manager_sex', 'manager_idnumber', 'manager_mobilephone', 'manager_telephone', 'manager_fax'], 'integer'],
+            [['company_id', 'manager_idnumber', 'manager_mobilephone', 'manager_telephone', 'manager_fax'], 'integer'],
             [['manager_type', 'manager_email'], 'string', 'max' => 20],
+            [['manager_sex'], 'string'],
             [['manager_address'], 'string', 'max' => 50],
             [['manager_zip_code'], 'string', 'max' => 10],
             [['manager_comment'], 'string', 'max' => 200],
