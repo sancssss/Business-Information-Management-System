@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('管理公司图片', ['company-picture'], ['class'=>'btn btn-primary']) ?>
-        <?= Html::a('更新公司资料', ['company-update'], ['class'=>'btn btn-primary']) ?>
-        <?= Html::a('负责人管理', ['company-manager'], ['class'=>'btn btn-info']) ?>
+        <?= Html::a('更新公司资料', ['update-company'], ['class'=>'btn btn-primary']) ?>
+        <?= Html::a('负责人管理', ['managers-list'], ['class'=>'btn btn-info']) ?>
     </p>
     <p><h3>公司简介 <?= Html::a('查看详细信息>>', ['/company-user/my-company']) ?></h3>
     </p>

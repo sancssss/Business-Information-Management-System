@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\YiiUser */
 
-$this->title = '第一次创建企业负责人';
+$this->title = '创建企业负责人';
 $this->params['breadcrumbs'][] = ['label' => '管理公司', 'url' => ['/company/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,9 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="yii-user-form">
 
     <?php $form = ActiveForm::begin([
+            'options' => ['class' => 'form-horizontal'],
+            'fieldConfig' => [
+            'template' => "{label}<div class=\"col-lg-3 col-md-4\">{input}</div>\n<div class=\"col-lg-8 col-md-7\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 col-md-1 control-label'],
+            ],
     ]); ?>
-    <?= $form->field($model, 'manager_type')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'manager_name')->textInput(['maxlength' => true])?>
     <?= $form->field($model, 'manager_sex')->dropDownList(['男' => '男', '女' => '女'], ['prompt'=>'选择您的性别'])  ?>
+    <?= $form->field($model, 'manager_type_id')->dropDownList(
+                                $allType,
+                                ['prompt'=>'负责人类型']) 
+                                ?>
     <?= $form->field($model, 'manager_idnumber')->textInput(['maxlength' => true])?>
     <?= $form->field($model, 'manager_mobilephone')->textInput(['maxlength' => true])?>
     <?= $form->field($model, 'manager_telephone')->textInput(['maxlength' => true]) ?>  

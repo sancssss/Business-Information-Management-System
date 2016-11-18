@@ -56,8 +56,12 @@ class CompanyUserController extends Controller
      */
     public function actionIndex()
     {
+        $model = $this->findModel(Yii::$app->user->getId());
+        if($model->companyUserDetails->company == NULL){
+            return $this->redirect(['/company/create-company']);
+        }
         return $this->render('index', [
-            'model' => $this->findModel(Yii::$app->user->getId()),
+            'model' => $model,
         ]);
     }
 
@@ -73,7 +77,7 @@ class CompanyUserController extends Controller
         ]);
     }
 
-
+    
     /**
      * Updates an existing YiiUser model.
      * If update is successful, the browser will be redirected to the 'view' page.

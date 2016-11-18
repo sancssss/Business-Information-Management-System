@@ -4,6 +4,7 @@ namespace app\models\company;
 use app\models\user\CompanyUserDetails;
 use app\models\file\ImageFile;
 use app\models\verified\VerifiedCompany;
+use app\models\index\AdministrativeRegion;
 
 use Yii;
 
@@ -60,13 +61,12 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'user_id', 'company_name'], 'required'],
-            [['company_id', 'user_id', 'company_region_id', 'company_doctor_num', 'company_master_num', 'company_bachelor_num', 'company_juniorcollege_num', 'company_staff_num', 'verified'], 'integer'],
+            [['user_id', 'company_name'], 'required'],
+            [[ 'user_id', 'company_region_id', 'company_doctor_num', 'company_master_num', 'company_bachelor_num', 'company_juniorcollege_num', 'company_staff_num', 'verified'], 'integer'],
             [['company_reg_longitude', 'company_reg_latitude', 'company_prod_longitude', 'company_prod_latitude'], 'number'],
             [['company_name', 'company_reg_address', 'company_prod_address'], 'string', 'max' => 50],
             [['company_credit_code', 'company_charater', 'company_registered_capital', 'company_established_time', 'company_re_province', 'company_reg_city', 'company_reg_county', 'company_prod_province', 'company_prod_city', 'company_prod_county'], 'string', 'max' => 20],
             [['company_comment'], 'string', 'max' => 200],
-            [['company_region_id'], 'exist', 'skipOnError' => true, 'targetClass' => CompanyUserDetails::className(), 'targetAttribute' => ['company_region_id' => 'user_id']],
             [['company_region_id'], 'exist', 'skipOnError' => true, 'targetClass' => AdministrativeRegion::className(), 'targetAttribute' => ['company_region_id' => 'region_id']],
         ];
     }
@@ -137,9 +137,9 @@ class Company extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompanyManager()
+    public function getCompanyManagers()
     {
-        return $this->hasOne(CompanyManager::className(), ['company_id' => 'company_id']);
+        return $this->hasMany(CompanyManager::className(), ['company_id' => 'company_id']);
     }
 
     /**

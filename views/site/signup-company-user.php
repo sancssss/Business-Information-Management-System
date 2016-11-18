@@ -16,6 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="yii-user-form">
 
     <?php $form = ActiveForm::begin([
+        'options' => ['class' => 'form-horizontal'],
+        'fieldConfig' => [
+            'template' => "{label}<div class=\"col-lg-3 col-md-4\">{input}</div>\n<div class=\"col-lg-8 col-md-7\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 col-md-1 control-label'],
+            ],
     ]); ?>
     <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_nickname')->textInput(['maxlength' => true]) ?>

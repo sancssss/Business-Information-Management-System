@@ -12,8 +12,10 @@ use app\models\EntryForm;
 use app\models\user\User;
 use app\models\user\CompanyUserDetails;
 use app\models\user\AdminUserDetails;
+use app\models\index\AdministrativeRegion;
 use app\models\form\SignupForm;
 use app\models\form\AdminSignupForm;
+use yii\helpers\ArrayHelper;
 class SiteController extends Controller
 {
     /**
@@ -105,6 +107,8 @@ class SiteController extends Controller
        $user = new User();
        $adminUser = new AdminUserDetails();
        $form = new AdminSignupForm();
+       $religions = AdministrativeRegion::find()->all();
+       $religionList = ArrayHelper::map($religions, 'region_id', 'region_name');
        //数据存在form模型中并且验证
        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             //return print_r($form);
@@ -144,6 +148,7 @@ class SiteController extends Controller
         } else {
             return $this->render('signup-admin-user', [
                  'model' => $form,
+                'religionList' => $religionList,
             ]);
         }
     }

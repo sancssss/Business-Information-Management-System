@@ -8,15 +8,21 @@ use yii\widgets\DetailView;
 
 $this->title = "用户中心";
 $this->params['breadcrumbs'][] = $this->title;
+$isVerified = 0;
+if($model->companyUserDetails->company->verified == 0){
+    $isVerified = 1;//创建了公司没有被审核
+}else{
+    $isVerified = 2;//已经审核的公司
+}
 ?>
+
 <div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        
-    </p>
-
+    <div class="row">
+    <div class="col-lg-3 col-md-3">
+    <?= $this->render('@app/views/layouts/company_user_left_menu') ?>
+    </div>
+    <div class="col-lg-9 col-md-9">
+    <h3><?= Html::encode($this->title) ?></h3>
     <?= DetailView::widget([
         'model' => $model,
         
@@ -29,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'companyUserDetails.user_comment'
         ],
     ]) ?>
-    <?= Html::a($model->companyUserDetails->company->verified == 1 ? '查看我的公司' : '公司审核中', ['my-company'],$model->companyUserDetails->company->verified == 1 ? ['class'=>'btn btn-primary'] : ['class'=>'btn btn-warning']) ?>
-
+    <?= Html::a($isVerified == 2 ? '查看我的公司' : '公司审核中', ['my-company'],$isVerified == 2 ? ['class'=>'btn btn-primary'] : ['class'=>'btn btn-warning']) ?>
+    </div>
+    </div>
 </div>

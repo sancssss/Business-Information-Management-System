@@ -11,8 +11,12 @@ $this->params['breadcrumbs'][] = ['label' => '个人中心', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="company-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+    <?= $this->render('@app/views/layouts/company_user_left_menu') ?>
+    </div>
+    <div class="col-lg-9 col-md-9">
+    <h3><?= Html::encode($this->title) ?></h3>
     <?php $isChecked = $model->verified ?>
     <p>
         <?= Html::a($isChecked == 1 ? '管理我的公司' : '请等待审核后操作',
@@ -54,5 +58,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'company_comment',
         ],
     ]) ?>
-
+</div>
 </div>

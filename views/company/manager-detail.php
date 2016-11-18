@@ -15,14 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('更新信息', ['update-manager'], ['class'=>'btn btn-info']) ?>
+        <?= Html::a('更新信息', ['update-manager', 'id' => $model->manager_type_id], ['class'=>'btn btn-info']) ?>
     </p>
     
     <?= DetailView::widget([
         'model' => $model,
         
         'attributes' => [
-            'manager_type',
+            'manager_type_id',
             'manager_sex',
             'manager_idnumber',
             'manager_mobilephone',
