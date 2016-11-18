@@ -11,7 +11,11 @@ $this->title = '全部企业列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-list">
-
+  <div class = "row">
+  <div class="col-lg-3 col-md-3">
+    <?= $this->render('@app/views/layouts/company_manager_left_menu') ?>
+    </div>
+    <div class="col-lg-9 col-md-9">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
     
@@ -31,5 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-    
+    </div>
+  </div>
 </div>

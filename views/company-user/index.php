@@ -22,7 +22,9 @@ if($model->companyUserDetails->company->verified == 0){
     <?= $this->render('@app/views/layouts/company_user_left_menu') ?>
     </div>
     <div class="col-lg-9 col-md-9">
-    <h3><?= Html::encode($this->title) ?></h3>
+    <div class="panel panel-default">
+    <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> <?= Html::encode($this->title) ?></div>
+    <div class="panel-body">
     <?= DetailView::widget([
         'model' => $model,
         
@@ -36,6 +38,8 @@ if($model->companyUserDetails->company->verified == 0){
         ],
     ]) ?>
     <?= Html::a($isVerified == 2 ? '查看我的公司' : '公司审核中', ['my-company'],$isVerified == 2 ? ['class'=>'btn btn-primary'] : ['class'=>'btn btn-warning']) ?>
+    </div>
+    </div>
     </div>
     </div>
 </div>

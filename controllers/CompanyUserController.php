@@ -6,7 +6,7 @@ use Yii;
 use app\models\user\User;
 use app\models\company\Company;
 use \app\models\FormModel\UpdateUserForm;
-use app\models\UserSearch;
+use app\models\user\CompanyUserDetails;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -74,6 +74,28 @@ class CompanyUserController extends Controller
         $model = Company::find()->where(['user_id' => Yii::$app->user->getId()])->one();
         return $this->render('my-company', [
             'model' => $model,
+        ]);
+    }
+    //TODO::应该使用场景模式scenrio
+    public function actionUpdateUser()
+    {
+        $detailModel = CompanyUserDetails::find()->where(['user_id' => Yii::$app->user->getId()])->one();
+        $userModel = $this->findModel(Yii::$app->user->getId());
+        //$tempPassword = $userModel->user_password;
+        $userModel->user_password = "";
+        if($userModel->load(Yii::$app->request->post()) && $detailModel->load(Yii::$app->request->post())){
+            $isVaild = $userModel->validate();
+            $isVaild = $isVaild && $detailModel->validate();
+            if($isVaild){
+                $userModel->user_password = md5($userModel->user_password);
+                $detailModel->save();
+                $userModel->save();
+                return $this->redirect(['index']);
+            }
+        }
+        return $this->render('update-user', [
+            'userModel' => $userModel,
+            'detailModel' => $detailModel,
         ]);
     }
 

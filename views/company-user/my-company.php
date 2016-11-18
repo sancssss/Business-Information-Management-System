@@ -16,7 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('@app/views/layouts/company_user_left_menu') ?>
     </div>
     <div class="col-lg-9 col-md-9">
-    <h3><?= Html::encode($this->title) ?></h3>
+    <div class="panel panel-default">
+    <div class="panel-heading"><span class="glyphicon glyphicon-book"></span> <?= Html::encode($this->title) ?></div>
+    <div class="panel-body">
     <?php $isChecked = $model->verified ?>
     <p>
         <?= Html::a($isChecked == 1 ? '管理我的公司' : '请等待审核后操作',
@@ -58,5 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'company_comment',
         ],
     ]) ?>
+    </div>
+    </div>
 </div>
 </div>
