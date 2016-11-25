@@ -30,13 +30,18 @@ class ProvinceAdminController extends \yii\web\Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'only' => ['index', 'update-user', 'company-waitting-list', 'confirm-company', 'company-lists', 'company-detail', 'county-waitting-list', 'city-waitting-list', 'admin-list', 'admin-details', 'confirm-admin', 'admin-log', 'company-log', 'company-list'],
                 'rules' => [
                      [
                         'allow' => 'true',
-                        'actions' => ['index', 'update-user', 'company-waitting-list', 'confirm-company', 'company-list', 'company-detail', 'county-waitting-list', 'city-waitting-list', 'admin-list', 'admin-detail', 'confirm-admin',],
+                        'actions' => ['company-waitting-list', 'confirm-company', 'company-lists', 'company-detail', 'county-waitting-list', 'city-waitting-list', 'admin-list', 'admin-details', 'confirm-admin', 'admin-log', 'company-log', 'company-list'],
                         'roles' => ['province_admin','system_admin'],
                     ],
+                    [
+                        'allow' => 'true',
+                        'actions' => ['index', 'update-user'],
+                        'roles' => ['province_admin'],
+                    ]
                 ]
             ],
         ];

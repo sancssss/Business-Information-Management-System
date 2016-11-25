@@ -7,10 +7,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\YiiUser */
 
-$this->title = '更新资料';
+$this->title = '修改密码';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="yii-user-create">
+<div class="yii-user-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="yii-user-form">
@@ -23,14 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
     ]); ?>
     <?= $form->field($userModel, 'user_password')->passwordInput(['maxlength' => true]) ?>
-    <?= $form->field($detailModel, 'user_nickname')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($detailModel, 'user_phone_number')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($detailModel, 'user_sex')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($detailModel, 'user_email')->textInput(['maxlength' => true]) ?>  
-    <?= $form->field($detailModel, 'user_comment')->textarea(['maxlength' => true]) ?>  
+    
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
-        <?= Html::submitButton('更新资料',  ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('修改密码',  ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 

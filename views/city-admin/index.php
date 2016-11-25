@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
         <p>
-            <?= Html::a('更新资料', ['/county-admin/update-user'], ['class'=>'btn btn-success']) ?>
+            <?= Html::a('更新资料', ['/city-admin/update-user'], ['class'=>'btn btn-success']) ?>
         </p>
     </div>
     </div>

@@ -55,7 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'company_staff_num')->textInput(['maxlength' => true])?>
     <?= $form->field($model, 'company_comment')->textInput(['maxlength' => true])?>
     <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
         <?= Html::submitButton('创建一个新企业',  ['class' => 'btn btn-success']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

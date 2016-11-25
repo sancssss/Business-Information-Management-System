@@ -177,7 +177,7 @@ class SiteController extends Controller
                 case User::PROVINCE_ADMIN:
                     return $this->redirect(['province-admin/index']);
                 case User::SYSTEM_ADMIN:
-                    return $this->redirect([]);
+                    return $this->redirect(['system-admin/index']);
             }
         }
 

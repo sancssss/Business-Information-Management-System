@@ -35,7 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($detailModel, 'user_comment')->textarea(['maxlength' => true]) ?> 
     
     <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
         <?= Html::submitButton('更新资料',  ['class' => 'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

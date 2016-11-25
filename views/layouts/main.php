@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => '企业管理系统',
+        'brandLabel' => '江苏省肥料企业管理系统',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -57,6 +57,8 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+        <div class="panel panel-default">
+        <div class="panel-body">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             'homeLink' => ['label' => '首页',
@@ -64,6 +66,8 @@ AppAsset::register($this);
                 ],
             ]) ?>
         <?= $content ?>
+        </div>
+        </div>
     </div>
 </div>
 

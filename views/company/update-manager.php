@@ -38,7 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'manager_zip_code')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'manager_comment')->textInput(['maxlength' => true]) ?>
     <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
         <?= Html::submitButton('更新负责人',  ['class' => 'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

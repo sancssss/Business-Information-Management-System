@@ -12,8 +12,8 @@ AppAsset::register($this);
 <ul class="list-group">
     <a class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span class="glyphicon glyphicon-user"></span> 用户管理</a>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-    <a href="<?= Url::to(['/province-admin/index']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 基本信息</a>
-    <a href="<?= Url::to(['/province-admin/update-user']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-edit"></span> 修改资料</a>
+    <a href="<?= Url::to(['/system-admin/index']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 基本信息</a>
+    <a href="<?= Url::to(['/system-admin/update-user']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-edit"></span> 修改资料</a>
     </div>
     <a class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"><span class="glyphicon glyphicon-folder-close"></span> 企业管理</a>
     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingtwo">
@@ -27,6 +27,11 @@ AppAsset::register($this);
     <a href="<?= Url::to(['/province-admin/city-waitting-list']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-ok"></span> 审核市级管理员</a>
     <a href="<?= Url::to(['/province-admin/admin-list']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 管理员列表</a>
     <a href="<?= Url::to(['/province-admin/admin-log']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-time"></span> 审核记录</a>
+    </div>
+    <a class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour"><span class="glyphicon glyphicon-user"></span> 省级管理员设置</a>
+    <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+    <a href="<?= Url::to(['/system-admin/add-padmin']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-plus"></span> 增加管理</a>
+    <a href="<?= Url::to(['/system-admin/admin-list']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 管理列表</a>
     </div>
 </ul>
 
