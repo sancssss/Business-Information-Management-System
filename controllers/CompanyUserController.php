@@ -93,7 +93,7 @@ class CompanyUserController extends Controller
                 return $this->redirect(['index']);
             }
         }
-        return $this->render('update-user', [
+        return $this->render('update-user', [   
             'userModel' => $userModel,
             'detailModel' => $detailModel,
         ]);

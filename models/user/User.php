@@ -15,7 +15,6 @@ use app\models\index\Identity;
  * @property string $user_name
  * @property string $user_password
  * @property integer $user_identityid
- * 1代表企业用户,2代表管理用户,3代表未审核用户,4代表未审核管理,5代表超级管理员.
  * @property string $some_info
  * @property String $user_authkey
  *
@@ -35,6 +34,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const PROVINCE_ADMIN = 7;
     const NOTCHECK_PROVINCE_ADMIN = 8;
     const SYSTEM_ADMIN = 9;
+    
+    const SCENARIO_UPDATE = 'update';
 
     /**
      * @inheritdoc
@@ -128,9 +129,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'user_name' => '用户名',
             'user_password' => '密码',
             'user_identityid' => '用户身份',
+            'identityStatus' => '身份状态',
         ];
     }
 
+    
+    public function getIdentityStatus()
+    {
+        if($this->user_identityid == 2 || $this->user_identityid == 4 || $this->user_identityid == 6){
+            return '未审核';
+        }else{
+            return '已审核';
+        }
+    }
     
     public function setPassword($password)
     {

@@ -65,7 +65,7 @@ class SiteController extends Controller
     {
         return $this->redirect(['site/index']);
     }
-    
+    //TODO:注册用户名重复性检测
     /**
      * 企业用户注册
      * If creation is successful, the browser will be redirected to the 'personal_center' page.

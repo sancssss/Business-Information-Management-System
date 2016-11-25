@@ -2,6 +2,8 @@
 
 namespace app\models\verified;
 
+use app\models\company\Company;
+use app\models\user\User;
 use Yii;
 
 /**
@@ -49,12 +51,12 @@ class VerifiedCompany extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'company_id' => 'Company ID',
-            'verified_user_id' => 'Verified User ID',
-            'verified_status' => 'Verified Status',
-            'verified_time' => 'Verified Time',
-            'verified_information' => 'Verified Information',
-            'verified_comment' => 'Verified Comment',
+            'company_id' => '企业ID',
+            'verified_user_id' => '审核者',
+            'verified_status' => '审核状态',
+            'verified_time' => '审核时间',
+            'verified_information' => '审核信息',
+            'verified_comment' => '审核备注',
         ];
     }
 

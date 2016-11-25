@@ -3,6 +3,7 @@
 namespace app\models\verified;
 
 use Yii;
+use app\models\user\User;
 
 /**
  * This is the model class for table "yii_verified_manager".
@@ -11,6 +12,7 @@ use Yii;
  * @property integer $admin_user_id
  * @property integer $verified_user_id
  * @property integer $verified_status
+ * @property integer $verified_time
  * @property string $verified_information
  * @property string $verified_comment
  *
@@ -33,8 +35,8 @@ class VerifiedManager extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['admin_user_id', 'verified_user_id', 'verified_status'], 'required'],
-            [['admin_user_id', 'verified_user_id', 'verified_status'], 'integer'],
+            [['admin_user_id', 'verified_user_id', 'verified_status', 'verified_time'], 'required'],
+            [['admin_user_id', 'verified_user_id', 'verified_status', 'verified_time'], 'integer'],
             [['verified_information', 'verified_comment'], 'string', 'max' => 200],
             [['admin_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['admin_user_id' => 'user_id']],
             [['verified_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['verified_user_id' => 'user_id']],
@@ -47,12 +49,13 @@ class VerifiedManager extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'admin_user_id' => 'Admin User ID',
-            'verified_user_id' => 'Verified User ID',
-            'verified_status' => 'Verified Status',
-            'verified_information' => 'Verified Information',
-            'verified_comment' => 'Verified Comment',
+            'id' => 'id',
+            'admin_user_id' => '用户id',
+            'verified_user_id' => '审核者',
+            'verified_status' => '审核状态',
+            'verified_time' => '审核时间',
+            'verified_information' => '审核信息',
+            'verified_comment' => '审核备注',
         ];
     }
 

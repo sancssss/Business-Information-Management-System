@@ -40,8 +40,8 @@ class Identity extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'identity_id' => 'Identity ID',
-            'identity_name' => 'Identity Name',
+            'identity_id' => '身份ID',
+            'identity_name' => '身份',
         ];
     }
 
