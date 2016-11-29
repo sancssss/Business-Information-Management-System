@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.16)
 # Database: company
-# Generation Time: 2016-11-25 07:50:16 +0000
+# Generation Time: 2016-11-29 11:04:58 +0000
 # ************************************************************
 
 
@@ -467,14 +467,26 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `yii_file`;
 
 CREATE TABLE `yii_file` (
-  `file_id` int(11) NOT NULL DEFAULT '0',
+  `file_id` int(11) NOT NULL AUTO_INCREMENT,
   `file_name` varchar(50) DEFAULT NULL,
   `file_extension` varchar(10) DEFAULT NULL,
   `file_path` varchar(50) DEFAULT NULL,
   `file_comment` varchar(200) DEFAULT NULL,
+  `file_time` int(11) unsigned DEFAULT NULL,
+  `file_hash` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`file_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `yii_file` WRITE;
+/*!40000 ALTER TABLE `yii_file` DISABLE KEYS */;
+
+INSERT INTO `yii_file` (`file_id`, `file_name`, `file_extension`, `file_path`, `file_comment`, `file_time`, `file_hash`)
+VALUES
+	(25,'屏幕快照 2016-11-29 16.35.55','png',NULL,NULL,1480408595,'vOkJQ2nKAemeL-ViySg7nyTbsTMp978d'),
+	(27,'屏幕快照 2016-11-29 16.35.55','png',NULL,NULL,1480416868,'b1Xv47v9CvRABSLmKSgXNBPB7PqgwHxj');
+
+/*!40000 ALTER TABLE `yii_file` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table yii_identity
@@ -514,16 +526,49 @@ DROP TABLE IF EXISTS `yii_image_file`;
 
 CREATE TABLE `yii_image_file` (
   `company_id` int(12) NOT NULL,
-  `image_type` varchar(20) DEFAULT NULL,
+  `image_typeid` int(11) unsigned NOT NULL,
   `display_order` tinyint(1) DEFAULT NULL,
   `file_id` int(11) NOT NULL,
   `image_comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`company_id`),
   KEY `file_id` (`file_id`),
-  CONSTRAINT `yii_image_file_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `yii_file` (`file_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `yii_image_file_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `yii_company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `yii_image_file_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `yii_file` (`file_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `yii_image_file` WRITE;
+/*!40000 ALTER TABLE `yii_image_file` DISABLE KEYS */;
+
+INSERT INTO `yii_image_file` (`company_id`, `image_typeid`, `display_order`, `file_id`, `image_comment`)
+VALUES
+	(2,1,NULL,25,NULL),
+	(2,1,NULL,27,NULL);
+
+/*!40000 ALTER TABLE `yii_image_file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table yii_image_type
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `yii_image_type`;
+
+CREATE TABLE `yii_image_type` (
+  `type_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(50) NOT NULL DEFAULT '' COMMENT '类型',
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `yii_image_type` WRITE;
+/*!40000 ALTER TABLE `yii_image_type` DISABLE KEYS */;
+
+INSERT INTO `yii_image_type` (`type_id`, `type_name`)
+VALUES
+	(1,'证书图片一'),
+	(2,'证书图片二'),
+	(3,'证书图片三'),
+	(4,'证书图片四');
+
+/*!40000 ALTER TABLE `yii_image_type` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table yii_manager_type

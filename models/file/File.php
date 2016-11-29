@@ -31,8 +31,6 @@ class File extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['file_id'], 'required'],
-            [['file_id'], 'integer'],
             [['file_name', 'file_path'], 'string', 'max' => 50],
             [['file_extension'], 'string', 'max' => 10],
             [['file_comment'], 'string', 'max' => 200],
@@ -46,18 +44,19 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             'file_id' => 'File ID',
-            'file_name' => 'File Name',
-            'file_extension' => 'File Extension',
+            'file_name' => '文件名',
+            'file_extension' => '文件类型',
             'file_path' => 'File Path',
-            'file_comment' => 'File Comment',
+            'file_comment' => '文件备注',
+            'file_time' => '上传时间'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImageFiles()
+    public function getImageFile()
     {
-        return $this->hasMany(ImageFile::className(), ['file_id' => 'file_id']);
+        return $this->hasOne(ImageFile::className(), ['file_id' => 'file_id']);
     }
 }

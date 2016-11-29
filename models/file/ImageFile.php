@@ -3,6 +3,9 @@
 namespace app\models\file;
 
 use Yii;
+use app\models\company\Company;
+use app\models\file\File;
+use app\models\index\ImageType;
 
 /**
  * This is the model class for table "yii_image_file".
@@ -32,12 +35,10 @@ class ImageFile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'file_id'], 'required'],
-            [['company_id', 'display_order', 'file_id'], 'integer'],
-            [['image_type'], 'string', 'max' => 20],
             [['image_comment'], 'string', 'max' => 200],
-            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => YiiCompany::className(), 'targetAttribute' => ['company_id' => 'company_id']],
-            [['file_id'], 'exist', 'skipOnError' => true, 'targetClass' => YiiFile::className(), 'targetAttribute' => ['file_id' => 'file_id']],
+            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'company_id']],
+            [['file_id'], 'exist', 'skipOnError' => true, 'targetClass' => File::className(), 'targetAttribute' => ['file_id' => 'file_id']],
+            [['image_typeid'], 'exist', 'skipOnError' => true, 'targetClass' => ImageType::className(), 'targetAttribute' => ['image_typeid' => 'type_id']],
         ];
     }
 
@@ -48,7 +49,7 @@ class ImageFile extends \yii\db\ActiveRecord
     {
         return [
             'company_id' => 'Company ID',
-            'image_type' => 'Image Type',
+            'image_typeid' => 'Image Type',
             'display_order' => 'Display Order',
             'file_id' => 'File ID',
             'image_comment' => 'Image Comment',
@@ -69,5 +70,12 @@ class ImageFile extends \yii\db\ActiveRecord
     public function getFile()
     {
         return $this->hasOne(File::className(), ['file_id' => 'file_id']);
+    }
+    
+    public function getFileUrlName()
+    {
+        $url = $this->getFile()->one();
+        $result = $url->file_hash.".".$url->file_extension;
+        return $result;
     }
 }

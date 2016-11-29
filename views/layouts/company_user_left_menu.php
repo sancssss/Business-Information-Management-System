@@ -21,7 +21,7 @@ AppAsset::register($this);
     <a href="<?= Url::to(['/company-user/my-company']) ?>" class="list-group-item"><span class="glyphicon glyphicon-file"></span> 公司资料</a>
     <a href="<?= Url::to(['/company/index']) ?>" class="list-group-item"><span class="glyphicon glyphicon-th-large"></span> 管理公司</a>
     <a href="<?= Url::to(['/company/managers-list']) ?>" class="list-group-item"> <span class="glyphicon glyphicon-folder-open"></span> 负责人管理</a>
-    <a href="<?= Url::to(['/company/company-picture']) ?>" class="list-group-item"><span class="glyphicon glyphicon-picture"></span> 图片管理</a>
+    <a href="<?= Url::to(['/company-picture/index']) ?>" class="list-group-item"><span class="glyphicon glyphicon-picture"></span> 图片管理</a>
     </div>
 </ul>
 
