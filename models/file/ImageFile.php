@@ -52,7 +52,7 @@ class ImageFile extends \yii\db\ActiveRecord
             'image_typeid' => 'Image Type',
             'display_order' => 'Display Order',
             'file_id' => 'File ID',
-            'image_comment' => 'Image Comment',
+            'image_comment' => '备注',
         ];
     }
 

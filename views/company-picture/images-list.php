@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'file.file_name',
             'file.file_extension',
             'file.file_time:date',
+            'image_comment',
             [
                 'label'=>'缩略图',
                 'attribute' => 'fileUrlName',
@@ -41,8 +42,39 @@ $this->params['breadcrumbs'][] = $this->title;
                 return Html::a(Html::img(Yii::$app->request->BaseUrl.'/uploads/'.$data->fileUrlName,  [
                     'width' => 120])  , Url::to(Yii::$app->request->BaseUrl.'/uploads/'.$data->fileUrlName)
                     );
-                }
+                },
             ],
+             [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => "{delete-picture} {update-comment}",
+                'buttons' => [
+                    'delete-picture' => function ($url, $model, $key){
+                        return Html::a('<span class="glyphicon glyphicon-remove"></span>',
+                            $url,
+                            [
+                               'title' => '删除',
+                            ]
+                            );
+                            }, 
+                    'update-comment' => function ($url, $model, $key){
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                            $url,
+                            [
+                               'title' => '备注',
+                            ]
+                            );
+                            }
+                            
+                        ],
+                       
+                        'urlCreator' => function ($action, $model, $key, $index) {
+                           if($action == 'delete-picture') {
+                               return ['delete-picture', 'id' => $model->file_id];
+                           }else if($action == 'update-comment') {
+                               return ['update-comment', 'id' => $model->file_id];
+                           }
+                        }
+                ],
         ],
     ]); ?>
     <p>

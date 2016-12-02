@@ -73,8 +73,15 @@ class SystemAdminController extends \yii\web\Controller
     public function actionAddPadmin()
     {
         $model = new User();
-        if($model->load(Yii::$app->request->post()) && $model->save()){
-            return $this->render(['province-admin-list']);
+        $model->user_identityid = User::PROVINCE_ADMIN;
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            //设置角色
+            $model->user_password = md5(Yii::$app->request->post('user_password'));
+            $model->save();
+            $auth = Yii::$app->authManager;
+            $userRole = $auth->getRole('system_admin');
+            $auth->assign($userRole, $model->user_id);
+            return $this->redirect(['/system-admin/admin-list']);
         }
         return $this->render('add-padmin', [
             'model' => $model,
