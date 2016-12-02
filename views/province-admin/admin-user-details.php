@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="county-admin-view">
     <div class="row">
     <div class="col-lg-3 col-md-3">
-    <?= $this->render('@app/views/layouts/admin_user/province_admin_left_menu') ?>
+    <?= $this->render('@app/views/layouts/admin_user/system_province_admin_left_menu') ?>
     </div>
     <div class="col-lg-9 col-md-9">
         <div class="panel panel-default">
