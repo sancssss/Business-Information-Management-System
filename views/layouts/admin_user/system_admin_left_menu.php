@@ -33,6 +33,11 @@ AppAsset::register($this);
     <a href="<?= Url::to(['/system-admin/add-padmin']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-plus"></span> 增加管理</a>
     <a href="<?= Url::to(['/system-admin/admin-list']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 管理列表</a>
     </div>
+    <a class="list-group-item list-group-item-info" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive"><span class="glyphicon glyphicon-adjust"></span> 其它设置</a>
+    <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+    <a href="<?= Url::to(['/system-admin/company-manager-type-list']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 企业负责人类型管理</a>
+    <a href="<?= Url::to(['/system-admin/company-image-type-list']) ?>" class="list-group-item" ><span class="glyphicon glyphicon-list-alt"></span> 企业图片类型管理</a>
+    </div>
 </ul>
 
 

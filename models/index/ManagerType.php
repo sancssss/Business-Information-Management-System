@@ -28,8 +28,7 @@ class ManagerType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'type_name'], 'required'],
-            [['type_id'], 'integer'],
+            [['type_name'], 'required'],
             [['type_name'], 'string'],
         ];
     }

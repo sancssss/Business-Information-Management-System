@@ -5,9 +5,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\user\User;
-use app\models\user\AdminUserDetails;
 use app\models\user\admin\AdminUser;
 use yii\data\ActiveDataProvider;
+use app\models\index\ImageType;
+use app\models\index\ManagerType;
 use Yii;
 
 class SystemAdminController extends \yii\web\Controller
@@ -116,6 +117,120 @@ class SystemAdminController extends \yii\web\Controller
             //'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    
+    /*
+     * 负责人类型管理
+     */
+    public function actionCompanyManagerTypeList()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => ManagerType::find(),
+        ]);
+
+        return $this->render('company-manager-type-list', [
+            'dataProvider' => $dataProvider,
+        ]);
+        
+    }
+    
+    public function actionAddCompanyManagerType()
+    {
+        $model = new ManagerType();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['company-manager-type-list']);
+        } else {
+            return $this->render('add-company-manager-type', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
+    public function actionDeleteCompanyManagerType($id)
+    {
+        $this->findManagerTypeModel($id)->delete();
+
+        return $this->redirect(['company-manager-type-list']);
+    }
+    
+    public function actionUpdateCompanyManagerType($id)
+    {
+        $model = $this->findManagerTypeModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['company-manager-type-list']);
+        } else {
+            return $this->render('update-company-manager-type', [
+                'model' => $model,
+            ]);
+        }
+
+    }
+    
+    /**
+     * 图片类型管理
+     */
+    public function actionCompanyImageTypeList()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => ImageType::find(),
+        ]);
+
+        return $this->render('company-image-type-list', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionAddCompanyImageType()
+    {
+        $model = new IMageType();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['company-image-type-list']);
+        } else {
+            return $this->render('add-company-image-type', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
+    public function actionDeleteCompanyImageType($id)
+    {
+        $this->findImageTypeModel($id)->delete();
+
+        return $this->redirect(['company-image-type-list']);
+    }
+    
+    public function actionUpdateCompanyImageType($id)
+    {
+        $model = $this->findImageTypeModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['company-image-type-list']);
+        } else {
+            return $this->render('update-company-image-type', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
+    protected function findIMageTypeModel($id)
+    {
+        if (($model = ImageType::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function findManagerTypeModel($id)
+    {
+        if (($model = ManagerType::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
     
     //指定1000是超级管理员
