@@ -54,7 +54,7 @@ class AdminSignupForm extends  \yii\base\Model{
             'user_legal_person' => '单位法人',
             'user_comment' => '备注信息',
             'user_type' => '用户类型',
-            'region_id' => '行政代码',
+            'c' => '行政代码',
             'user_comment' => '备注信息',
         ];
     }
