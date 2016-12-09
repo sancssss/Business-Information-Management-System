@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_nickname')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_phone_number')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'user_sex')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_sex')->dropDownList(['男' => '男', '女' => '女'], ['prompt'=>'选择您的性别'])  ?>
     <?= $form->field($model, 'user_email')->textInput(['maxlength' => true]) ?>  
     <?= $form->field($model, 'user_comment')->textarea(['maxlength' => true]) ?>  
     <?= $form->field($model, 'user_password')->passwordInput(['maxlength' => true]) ?>

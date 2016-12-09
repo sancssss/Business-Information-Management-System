@@ -25,23 +25,30 @@ $this->params['breadcrumbs'][] = $this->title;
             'labelOptions' => ['class' => 'col-lg-1 col-md-1 control-label'],
             ],
     ]); ?>
-        <div class="form-horizontal">
+    <div class="form-horizontal">
     <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_nickname')->textInput(['maxlength' => true]) ?>
-        </div>
+    </div>
     <?= $form->field($model, 'user_phone_number')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_sex')->dropDownList(['男' => '男', '女' => '女'], ['prompt'=>'选择您的性别'])  ?>
     <?= $form->field($model, 'user_email')->textInput(['maxlength' => true]) ?>  
-    <?= $form->field($model, 'user_birthday')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_birthday')->textInput(['maxlength' => true, "type" => "date"]) ?>
     <?= $form->field($model, 'user_id_number')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_address')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_zip_code')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_legal_person')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'user_type')->textInput(['maxlength' => true]) ?>
-    <div class="form-group field-adminsignupform-region_id required">
+    <?=$this->registerJs("var signupAdmin = Object.create(SignupRegion);
+                        signupAdmin.objectName = 'signupAdmin';
+                        signupAdmin.finallyId = 'AdminSignupForm[region_id]';
+                        signupAdmin.rootNode = 'adminsignupform-div';
+                        signupAdmin.provinceNode = 'adminsignupform-province';
+                        signupAdmin.cityNode = 'adminsignupform-city';
+                        signupAdmin.regionNode = 'adminsignupform-region';",3)?>
+    <div class="form-group field-adminsignupform-region_id required form-inline">
     <label class="col-lg-1 col-md-1 control-label" for="adminsignupform-province">行政代码</label><div class="col-lg-3 col-md-4">
-        <div id ="adminsignupform-div">adminsignupform-province
-        <select id="adminsignupform-province" class="form-control"s onclick="SelectProvince()" onchange="SelectProvince()">
+        <div id ="adminsignupform-div">
+            <select id="adminsignupform-province" class="form-control" style="width: 100%;" onclick="signupAdmin.selectProvince()" onchange="signupAdmin.selectProvince()">
             <option value="0">请选择</option>
             <option value="320000">江苏省</option>
         </select>

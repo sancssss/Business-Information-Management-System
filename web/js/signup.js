@@ -1,26 +1,34 @@
 
-function SelectProvince(){
-        var selecRoot = document.getElementById('adminsignupform-div');
-	var isSelectProvince = document.getElementById('adminsignupform-province');
-	var isSelectCity = document.getElementById('adminsignupform-city');
-	var isSelectRegion = document.getElementById('adminsignupform-region_id');
-	if(isSelectCity != null){
+var SignupRegion = {
+    rootNode:'',
+    provinceNode:'',
+    cityNode:'',
+    regionNode:'',
+    finallyId:'',
+    objectName:'',
+    selectProvince:function (){
+        var selecRoot = document.getElementById(this.rootNode);
+	var isSelectProvince = document.getElementById(this.provinceNode);
+	var isSelectCity = document.getElementById(this.cityNode);
+	var isSelectRegion = document.getElementById(this.regionNode);
+	if(isSelectCity !== null){
             var removed = selecRoot.removeChild(isSelectCity);
         }	
-	if(isSelectRegion != null){
+	if(isSelectRegion !== null){
             var removed = selecRoot.removeChild(isSelectRegion);
         }
 	if(parseInt(isSelectProvince.value) === 320000){
-		SelectCity();
+                isSelectProvince.setAttribute("style", "width: auto;");//点击后改变宽度
+		this.selectCity();
 	}
-}
-
+    },
 //选择市
-function SelectCity(){
+    selectCity:function(){
 	var addOPtionNode = document.createElement('select');
-	addOPtionNode.id = 'adminsignupform-city';
+	addOPtionNode.id = this.cityNode;
         addOPtionNode.setAttribute("class","form-control");
-	addOPtionNode.setAttribute("onchange", "javascript:SelectRegion()");
+	addOPtionNode.setAttribute("onchange", "javascript:"+this.objectName+".selectRegion()");
+        addOPtionNode.setAttribute("style", "width: auto;");
 	var xmlOPtionValue = document.getElementsByTagName("region_id");
 	var xmlOPtionText = document.getElementsByTagName("region_name");
 	for(var i = 0; i < xmlOPtionValue.length; i++){
@@ -35,25 +43,28 @@ function SelectCity(){
 		}
 
 	}	
-	var selectVal = document.getElementById('adminsignupform-div');
+	var selectVal = document.getElementById(this.rootNode);
 	selectVal.appendChild(addOPtionNode);
-        SelectRegion();
-}
+        this.selectRegion();
+    },
 
-//选择市
-function SelectRegion(){
-	var selecRoot = document.getElementById('adminsignupform-div');
-	var isSelectRegion = document.getElementById('adminsignupform-region_id');
-	if(isSelectRegion != null){
+//选择区
+    selectRegion:function(){
+	var selecRoot = document.getElementById(this.rootNode);
+	var isSelectRegion = document.getElementById(this.regionNode);
+	if(isSelectRegion !== null){
 		selecRoot.removeChild(isSelectRegion);
 	}
-	var cityNodeVal = parseInt(document.getElementById('adminsignupform-city').value);
+	var cityNodeVal = parseInt(document.getElementById(this.cityNode).value);
 	//区值小于市的值加100
 	var addOPtionNode = document.createElement('select');
-	addOPtionNode.id = 'adminsignupform-region_id';
-        addOPtionNode.name = 'AdminSignupForm[region_id]';
+	addOPtionNode.id = this.regionNode;
+        //addOPtionNode.name = 'AdminSignupForm[region_id]';
+        addOPtionNode.name = this.finallyId;
         addOPtionNode.setAttribute("class","form-control");
-        addOPtionNode.setAttribute("name","AdminSignupForm[region_id]");
+        addOPtionNode.setAttribute("style", "width: auto;");
+        //addOPtionNode.setAttribute("name","AdminSignupForm[region_id]");
+        addOPtionNode.setAttribute("name",this.finallyId);
 	var xmlOPtionValue = document.getElementsByTagName("region_id");
 	var xmlOPtionText = document.getElementsByTagName("region_name");
 	for(var i = 0; i < xmlOPtionValue.length; i++){
@@ -67,7 +78,9 @@ function SelectRegion(){
 				addOPtionNode.appendChild(add1option);
 			}
 		}
-		var selectVal = document.getElementById('adminsignupform-div');
+		var selectVal = document.getElementById(this.rootNode);
 		selectVal.appendChild(addOPtionNode);
 		
 }
+};
+

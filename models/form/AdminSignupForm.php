@@ -33,7 +33,7 @@ class AdminSignupForm extends  \yii\base\Model{
             [['user_name'], 'string', 'max' => 32],
             [['user_password', 'user_confirm_password'], 'string', 'max' => 32],
             [['user_confirm_password'], 'compare', 'compareAttribute' => 'user_password'],
- 
+            ['user_sex', 'in', 'range' => ['男','女']],
             ];
     }
     
@@ -54,7 +54,7 @@ class AdminSignupForm extends  \yii\base\Model{
             'user_legal_person' => '单位法人',
             'user_comment' => '备注信息',
             'user_type' => '用户类型',
-            'c' => '行政代码',
+            'region_id' => '行政代码',
             'user_comment' => '备注信息',
         ];
     }

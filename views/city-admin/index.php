@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'adminUserDetails.user_legal_person',
             'adminUserDetails.user_type',
             'adminUserDetails.user_comment',
+            'adminUserDetails.region.region_id',
+            'adminUserDetails.region.region_name',
             'identityStatus',
         ],
     ]) ?>
