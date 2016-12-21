@@ -11,8 +11,6 @@ use yii\helpers\Html;
  */
 class CompanyImagetype extends \app\models\index\ImageType
 {
-        
-    public $company_id;
    
     /**
      * @inheritdoc

@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use yii\filters\AccessControl;
 use app\models\company\Company;
 use yii\web\NotFoundHttpException;
 use app\models\company\CompanyManager;
@@ -12,6 +13,25 @@ use Yii;
 
 class CompanyController extends \yii\web\Controller
 {
+    
+    
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'create-company', 'update-company', 'manager-detail', 'create-manager', 'managers-list', 'add-manager', 'update-manager', ],
+                'rules' => [
+                     [
+                        'allow' => 'true',
+                        'actions' => ['index', 'create-company', 'update-company', 'manager-detail', 'create-manager', 'managers-list', 'add-manager', 'update-manager',],
+                        'roles' => ['company'],
+                    ],
+                ]
+            ],
+        ];
+    }
+    
     /*
      * 管理公司的主界面
      */

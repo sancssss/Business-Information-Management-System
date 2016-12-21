@@ -11,6 +11,10 @@ use app\models\user\AdminUserDetails;
 use app\models\verified\VerifiedCompany;
 use app\models\verified\VerifiedManager;
 use yii\data\ActiveDataProvider;
+use app\models\company\admin\AdminCompanyImageType;
+use app\models\index\ImageType;
+use app\models\file\ImageFile;
+use app\models\company\admin\AdminCompanyManagerType;
 use Yii;
 
 class ProvinceAdminController extends \yii\web\Controller
@@ -140,12 +144,92 @@ class ProvinceAdminController extends \yii\web\Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
+    /*
+     * 公司资料详情
+     * 公司id $id
+     */
     public function actionCompanyDetail($id)
     {
         $model = ManagementCompany::find()->where(['company_id' => $id])->one();
          return $this->render('company-details', [
             'model' => $model,
+        ]);
+    }
+    /*
+     * 公司附件列表详情
+     * 公司id $id
+     */
+    public function actionCompanyImageTypeList($id)
+    {
+        $query = AdminCompanyImageType::find()->innerJoinWith('imageFile')->where(['company_id' => $id]);
+        $model = $query->one();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+         return $this->render('company-image-type-list', [
+            //'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+    
+    /*
+     * 附件列表
+     * 公司id $id
+     * 图片类型id $typeid
+     */
+    public function actionCompanyImageList($id,$typeid)
+    {
+        $query = ImageFile::find()->where(['company_id' => $id, 'image_typeid' => $typeid]);
+        $ImageType = ImageType::find()->where(['type_id' => $id])->one();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+         return $this->render('company-image-list', [
+            //'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'ImageType' => $ImageType,
+            'id' => $id,
+        ]);
+    }
+    
+    /*
+     * 公司法人列表
+     * $id 公司id
+     */
+    public function actionCompanyManagerList($id)
+    {
+        $query = AdminCompanyManagerType::find()->innerJoinWith('company')->where(['yii_company.company_id' => $id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+         return $this->render('company-manager-list', [
+            //'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'id' => $id,
+        ]);
+    }
+    
+    /*
+     * 公司法人详情
+     * $id 公司id
+     * $typeid 类型id
+     */
+    public function actionCompanyManagerDetail($id, $typeid)
+    {
+        $model = AdminCompanyManagerType::find()->innerJoinWith('company')->where(['yii_company.company_id' => $id, 'manager_type_id' => $typeid])->one();
+        return $this->render('company-manager', [
+            'model' => $model,
+            'id' => $id,
         ]);
     }
     

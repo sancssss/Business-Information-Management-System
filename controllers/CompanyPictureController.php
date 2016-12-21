@@ -11,6 +11,7 @@ use app\models\file\ImageFile;
 use app\models\file\File;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
+use yii\filters\AccessControl;
 
 class CompanyPictureController extends \yii\web\Controller
 {
@@ -24,7 +25,7 @@ class CompanyPictureController extends \yii\web\Controller
                 'rules' => [
                      [
                         'allow' => 'true',
-                        'actions' => ['index', 'pictures-list', 'upload-picture', 'delete-picture', 'update-comment',s],
+                        'actions' => ['index', 'pictures-list', 'upload-picture', 'delete-picture', 'update-comment',],
                         'roles' => ['company'],
                     ],
                 ]

@@ -18,7 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel panel-default">
     <div class="panel-heading"><span class="glyphicon glyphicon-book"></span> <?= Html::encode($this->title) ?></div>
     <div class="panel-body">
-
+    <h4>
+        <?= Html::a('查看该公司图片', ['company-image-type-list', 'id' => $model->company_id], ['class'=>'btn btn-info']) ?>
+        <?= Html::a('查看该公司法人', ['company-manager-list', 'id' => $model->company_id], ['class'=>'btn btn-info']) ?>
+    </h4>
     <?= DetailView::widget([
         'model' => $model,
         
@@ -53,6 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'company_comment',
         ],
     ]) ?>
+    </div>
     </div>
     </div>
 </div>

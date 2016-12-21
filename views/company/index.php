@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
     <p>
-        <?= Html::a('管理图片', ['company-picture'], ['class'=>'btn btn-primary']) ?>
+        <?= Html::a('管理图片', ['/company-picture/index'], ['class'=>'btn btn-primary']) ?>
         <?= Html::a('更新资料', ['update-company'], ['class'=>'btn btn-primary']) ?>
         <?= Html::a('负责人管理', ['managers-list'], ['class'=>'btn btn-primary']) ?>
     </p>

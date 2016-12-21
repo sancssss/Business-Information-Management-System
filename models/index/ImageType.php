@@ -55,5 +55,10 @@ class ImageType extends \yii\db\ActiveRecord
         return $this->hasMany(ImageFile::className(), ['image_typeid' => 'type_id']);
     }
     
+    public function getImageFile()
+    {
+        return $this->hasOne(ImageFile::className(), ['image_typeid' => 'type_id']);
+    }
+    
   
 }
