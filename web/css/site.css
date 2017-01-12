@@ -110,3 +110,21 @@ h1,h2,h3 {
     margin-top: 0px;
     margin-bottom: 10px;
 }
+
+.row-no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.yii-company-create > .col-lg-1, .col-md-1 {
+    width: 6.33333333%;
+}
+
+[class*="col-"],  /* Elements whose class attribute begins with "col-" */
+[class^="col-"] { /* Elements whose class attribute contains the substring "col-" */
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#allmap{height:600px;width:auto;}
+#r-result{width:100%; font-size:14px;}
