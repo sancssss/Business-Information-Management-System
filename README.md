@@ -1,4 +1,24 @@
-##企业管理系统
+##Business Information Management System
+### Based on Yii2 PHP Framework
+#####Local Development Environment
+***OS X 10.11/nginx 1.11/MySQL 5.7/PHP5.6***
+#####Development Framework
+***Yii2 + Bootstrap 3.0***
+***
+####Feature Introduction
+#####For Enterprise Users:
+* Register / login a user
+* Create user profile / create a company and waiting for administrator review or confirm
+* add and update corporation managers / company image resources management
+
+#####For administrators
+* County/city level administrator registration / login
+* County/city/provincial administrators have different permissions and administration panels
+* Enterprise users confirm / one-step confirm enterprise Users
+* city / county level administrator registration review / confirmation
+* System administrator has full administrative authority
+
+##企业信息管理系统
 ###基于 Yii2 的web应用
 #####开发测试环境
 ***OS X 10.11/nginx 1.11/MySQL 5.7/PHP5.6***
